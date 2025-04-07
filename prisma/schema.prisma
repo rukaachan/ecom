@@ -7,3 +7,168 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
+
+enum Role {
+  superadmin
+  customer
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(255)
+  email    String @unique @db.VarChar(255)
+  password String @db.VarChar(255)
+  role     Role   @default(customer)
+
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([role])
+}
+
+model Brand {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+  logo String @db.VarChar(255)
+
+  // Relations
+  // One-to-Many relation with Product
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+
+  // Relations
+  // One-to-Many relation with Product
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Location {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+
+  // Relations
+  // One-to-Many relation with Product
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ProductStatus {
+  available
+  out_of_stock
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+
+  // Relations
+  // One-to-Many relation with Brand
+  brand_id Int
+  brand    Brand @relation(fields: [brand_id], references: [id])
+
+  // One-to-Many relation with Category
+  category_id Int
+  category    Category @relation(fields: [category_id], references: [id])
+
+  // One-to-Many relation with Location
+  location_id Int
+  location    Location @relation(fields: [location_id], references: [id])
+
+  name        String        @db.VarChar(255)
+  description String        @db.Text
+  price       BigInt        @db.BigInt
+  stock       ProductStatus
+  images      String[]
+
+  orders        Order[]
+  orderProducts OrderProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+  @@index([stock])
+  @@index([category_id, price])
+}
+
+enum OrderStatus {
+  pending
+  shipped
+  delivered
+  cancelled
+}
+
+model Order {
+  id   Int    @id @default(autoincrement())
+  code String @unique @db.Text
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  total  BigInt      @db.BigInt
+  status OrderStatus
+
+  // One-to-Many relation with Product
+  product_id Int
+  Product    Product @relation(fields: [product_id], references: [id])
+
+  // One-to-One relation with OrderDetail
+  // Can be null if no details are provided
+  orderDetail OrderDetail?
+
+  // One-to-Many relation with OrderProduct
+  orderProducts OrderProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+}
+
+model OrderDetail {
+  id Int @id @default(autoincrement())
+
+  // Relations
+  // One-to-One relation with Order
+  order_id Int   @unique
+  order    Order @relation(fields: [order_id], references: [id])
+
+  name        String  @db.VarChar(255)
+  phone       String  @db.VarChar(30)
+  address     String  @db.Text
+  city        String  @db.VarChar(100)
+  postal_code String  @db.VarChar(20)
+  notes       String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderProduct {
+  id Int @id @default(autoincrement())
+
+  // One-to-Many relation with Product
+  product_id Int
+  product    Product @relation(fields: [product_id], references: [id])
+
+  // One-to-Many relation with Order
+  order_id Int
+  order    Order @relation(fields: [order_id], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([order_id, product_id])
+}
