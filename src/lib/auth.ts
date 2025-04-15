@@ -57,7 +57,7 @@ export const getUser = cache(async () => {
 declare module 'lucia' {
   interface Register {
     Lucia: typeof lucia;
-    userId: number;
+    UserId: number;
     DatabaseUserAttributes: {
       id: number;
       name: string;
