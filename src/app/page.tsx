@@ -1,5 +1,12 @@
-import { Button } from '@/components/ui/button';
+import { redirect } from "next/navigation";
+import { getUser } from "@/lib/auth";
 
-export default function Home() {
-  return <Button variant="default">Hello world</Button>;
+export default async function Home() {
+  const { session } = await getUser();
+
+  if (session) {
+    return redirect("/dashboard");
+  }
+
+  return redirect("/dashboard/sign-in");
 }

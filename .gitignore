@@ -39,3 +39,61 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# serena
+.serena/
+.serena/*
+
+# bun
+.bun-version
+
+# biome
+.biome/
+.biomeignore
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+
+# Logs
+*.log
+
+# Runtime data
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directories
+.nyc_output/
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional eslint cache
+.eslintcache
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn
+.yarn-integrity
+.yarn-metadata.json
+.yarn-cache/
+
+# Node version manager
+.nvmrc
+
+# parcel
+.parcel-cache
+
+# temporary files
+.tmp/
+temp/
