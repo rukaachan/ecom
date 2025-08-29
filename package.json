@@ -6,12 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "biome check src/",
-    "lint:fix": "biome check --write src/",
-    "format": "biome format --write src/",
-    "biome:check": "biome check src/",
-    "biome:fix": "biome check --write src/",
-    "biome:format": "biome format --write src/"
+    "lint": "biome check src/app/",
+    "lint:fix": "biome check --write src/app/",
+    "format": "biome format --write src/app/",
+    "biome:check": "biome check src/app/",
+    "biome:fix": "biome check --write src/app/",
+    "biome:format": "biome format --write src/app/",
+    "type-check": "npx tsc --noEmit src/app/**/*.{ts,tsx}"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
