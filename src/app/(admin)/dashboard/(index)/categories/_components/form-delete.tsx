@@ -5,6 +5,7 @@ import type { ActionResult } from "next/dist/server/app-render/types";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { deleteCategory } from "../lib/actions";
+import { Button } from "@/components/ui/button";
 
 const initialState: ActionResult = {
   error: "",

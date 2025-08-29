@@ -8,13 +8,15 @@ export default async function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Only check auth on the server
-  if (typeof window === "undefined") {
-    const { session } = await getUser();
+  // Server-side authentication verification for Next.js Server Components
+  const { user, session } = await getUser();
 
-    if (!session) {
-      return redirect("/dashboard/sign-in");
-    }
+  if (!session) {
+    return redirect("/dashboard/sign-in");
+  }
+
+  if (user && user.role !== "superadmin") {
+    return redirect("/dashboard/sign-in");
   }
 
   return (

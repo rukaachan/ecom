@@ -19,7 +19,6 @@ export async function getCategoryById(id: string) {
 
     return category;
   } catch (error) {
-    console.log(error);
     return null;
   }
 }

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { schemaCategory } from "@/lib/schema";
 import type { ActionResult } from "@/type";
+import prisma from "../../../../../../../lib/prisma";
 
 export async function postCategory(_: unknown, formData: FormData): Promise<ActionResult> {
   const validate = schemaCategory.safeParse({
@@ -24,7 +25,6 @@ export async function postCategory(_: unknown, formData: FormData): Promise<Acti
     });
     revalidatePath("/dashboard/categories");
   } catch (error) {
-    console.log(error);
     return {
       error: "Failed to create category",
     };
@@ -65,7 +65,6 @@ export async function updateCategory(
     });
     revalidatePath("/dashboard/categories");
   } catch (error) {
-    console.log(error);
     return {
       error: "Failed to update category",
     };
@@ -75,20 +74,20 @@ export async function updateCategory(
 }
 
 export async function deleteCategory(_: unknown, formData: FormData): Promise<ActionResult> {
-  // Extract the ID from formData
+  
   const id = formData.get("id");
 
-  // Validate that we have an ID
+  
   if (!id) {
     return {
       error: "Category ID is required",
     };
   }
 
-  // Convert to number
+  
   const categoryId = parseInt(id.toString(), 10);
 
-  // Validate the conversion
+  
   if (Number.isNaN(categoryId)) {
     return {
       error: "Invalid category ID",
@@ -103,7 +102,6 @@ export async function deleteCategory(_: unknown, formData: FormData): Promise<Ac
     });
     revalidatePath("/dashboard/categories");
   } catch (error) {
-    console.log(error);
     return {
       error: "Failed to delete category. It might be associated with products.",
     };

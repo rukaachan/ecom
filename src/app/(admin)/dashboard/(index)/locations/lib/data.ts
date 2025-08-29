@@ -19,7 +19,6 @@ export async function getLocationById(id: string) {
 
     return location;
   } catch (error) {
-    console.log(error);
     return null;
   }
 }

@@ -2,51 +2,79 @@
 
 import bcryptjs from "bcryptjs";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { lucia } from "@/lib/auth";
 import { schemaSignIn } from "@/lib/schema";
 import type { ActionResult } from "@/type";
 import prisma from "../../../../../../../lib/prisma";
 
 async function SignIn(_: unknown, formData: FormData): Promise<ActionResult> {
-  // Implement schema validation here
-  const validate = schemaSignIn.safeParse({
-    email: formData.get("email"),
-    password: formData.get("password"),
-  });
-
-  if (!validate.success) {
+  // Check if we're in the right environment
+  const isServer = typeof window === "undefined";
+  const isEdge = typeof process === 'undefined' || process.env?.NEXT_RUNTIME === 'edge';
+  
+  if (!isServer || isEdge) {
     return {
-      error: validate.error.errors[0].message,
+      error: "Authentication not available in this environment",
     };
   }
+  
+  try {
+    const email = formData.get("email");
+    const password = formData.get("password");
+    
+    const validate = schemaSignIn.safeParse({
+      email,
+      password,
+    });
 
-  const exisitingUser = await prisma.user.findFirst({
-    where: {
-      email: validate.data.email,
-      role: "superadmin",
-    },
-  });
+    if (!validate.success) {
+      return {
+        error: validate.error.errors[0].message,
+      };
+    }
+    
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email: validate.data.email,
+        role: "superadmin",
+      },
+    });
 
-  if (!exisitingUser) {
+    if (!existingUser) {
+      return {
+        error: "Email not found",
+      };
+    }
+
+    const comparedPassword = bcryptjs.compareSync(
+      validate.data.password,
+      existingUser.password,
+    );
+
+    if (!comparedPassword) {
+      return {
+        error: "Invalid password",
+      };
+    }
+    
+    const session = await lucia.createSession(existingUser.id, {});
+    const sessionCookie = lucia.createSessionCookie(session.id);
+    
+    (await cookies()).set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes,
+    );
+    
+    // Return success without redirecting directly
     return {
-      error: "Email not found",
+      success: true,
+    };
+  } catch (error) {
+    return {
+      error: "An unexpected error occurred during sign-in",
     };
   }
-
-  const comparedPassword = bcryptjs.compareSync(validate.data.password, exisitingUser.password);
-
-  if (!comparedPassword) {
-    return {
-      error: "Invalid password",
-    };
-  }
-
-  const session = await lucia.createSession(exisitingUser.id, {});
-  const sessionCookie = lucia.createSessionCookie(session.id);
-  (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-
-  return redirect("/dashboard");
 }
 
 export default SignIn;

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { schemaCategory } from "@/lib/schema";
 import type { ActionResult } from "@/type";
+import prisma from "../../../../../../../lib/prisma";
 
 export async function postLocation(_: unknown, formData: FormData): Promise<ActionResult> {
   const validate = schemaCategory.safeParse({
@@ -24,7 +25,6 @@ export async function postLocation(_: unknown, formData: FormData): Promise<Acti
     });
     revalidatePath("/dashboard/locations");
   } catch (error) {
-    console.log(error);
     return {
       error: "Failed to create location",
     };
@@ -65,7 +65,6 @@ export async function updateLocation(
     });
     revalidatePath("/dashboard/locations");
   } catch (error) {
-    console.log(error);
     return {
       error: "Failed to update location",
     };
@@ -75,20 +74,20 @@ export async function updateLocation(
 }
 
 export async function deleteLocation(_: unknown, formData: FormData): Promise<ActionResult> {
-  // Extract the ID from formData
+  
   const id = formData.get("id");
 
-  // Validate that we have an ID
+  
   if (!id) {
     return {
       error: "Location ID is required",
     };
   }
 
-  // Convert to number
+  
   const locationId = parseInt(id.toString(), 10);
 
-  // Validate the conversion
+  
   if (Number.isNaN(locationId)) {
     return {
       error: "Invalid location ID",
@@ -103,7 +102,6 @@ export async function deleteLocation(_: unknown, formData: FormData): Promise<Ac
     });
     revalidatePath("/dashboard/locations");
   } catch (error) {
-    console.log(error);
     return {
       error: "Failed to delete location. It might be associated with products.",
     };
