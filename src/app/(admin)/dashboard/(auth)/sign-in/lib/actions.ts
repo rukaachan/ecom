@@ -10,18 +10,18 @@ import prisma from "../../../../../../../lib/prisma";
 async function SignIn(_: unknown, formData: FormData): Promise<ActionResult> {
   // Check if we're in the right environment
   const isServer = typeof window === "undefined";
-  const isEdge = typeof process === 'undefined' || process.env?.NEXT_RUNTIME === 'edge';
-  
+  const isEdge = typeof process === "undefined" || process.env?.NEXT_RUNTIME === "edge";
+
   if (!isServer || isEdge) {
     return {
       error: "Authentication not available in this environment",
     };
   }
-  
+
   try {
     const email = formData.get("email");
     const password = formData.get("password");
-    
+
     const validate = schemaSignIn.safeParse({
       email,
       password,
@@ -32,7 +32,7 @@ async function SignIn(_: unknown, formData: FormData): Promise<ActionResult> {
         error: validate.error.errors[0].message,
       };
     }
-    
+
     const existingUser = await prisma.user.findFirst({
       where: {
         email: validate.data.email,
@@ -46,31 +46,24 @@ async function SignIn(_: unknown, formData: FormData): Promise<ActionResult> {
       };
     }
 
-    const comparedPassword = bcryptjs.compareSync(
-      validate.data.password,
-      existingUser.password,
-    );
+    const comparedPassword = bcryptjs.compareSync(validate.data.password, existingUser.password);
 
     if (!comparedPassword) {
       return {
         error: "Invalid password",
       };
     }
-    
+
     const session = await lucia.createSession(existingUser.id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
-    
-    (await cookies()).set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes,
-    );
-    
+
+    (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+
     // Return success without redirecting directly
     return {
       success: true,
     };
-  } catch (error) {
+  } catch (_error) {
     return {
       error: "An unexpected error occurred during sign-in",
     };

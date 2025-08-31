@@ -32,7 +32,7 @@ function SubmitButton() {
   );
 }
 
-export default function FormCategory({ data = "null", type = "ADD" }: FormCategoryProps) {
+export default function FormCategory({ data = null, type = "ADD" }: FormCategoryProps) {
   const updateCategoryWithId = (_: unknown, formData: FormData) =>
     updateCategory(_, formData, data?.id);
 
@@ -68,13 +68,13 @@ export default function FormCategory({ data = "null", type = "ADD" }: FormCatego
                 {state?.error && !isSchemaError && (
                   <Alert variant="destructive">
                     <AlertCircleIcon />
-                    <AlertTitle>Unable to process your payment.</AlertTitle>
+                    <AlertTitle>Category Operation Failed</AlertTitle>
                     <AlertDescription>
-                      <p>Please verify your billing information and try again.</p>
+                      <p>There was an error processing your category request.</p>
                       <ul className="list-inside list-disc text-sm">
-                        <li>Check your card details</li>
-                        <li>Ensure sufficient funds</li>
-                        <li>Verify billing address</li>
+                        <li>Check the category name</li>
+                        <li>Ensure all required fields are filled</li>
+                        <li>Verify the category doesn't already exist</li>
                       </ul>
                     </AlertDescription>
                   </Alert>

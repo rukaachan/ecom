@@ -13,12 +13,12 @@ export default async function LocationsPage() {
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-2">Locations</h1>
-          <p className="text-muted-foreground">Manage your locations</p>
+          <p className="text-muted-foreground">Manage your product Locations</p>
         </div>
         <Button asChild className="w-full sm:w-auto">
           <Link href="/dashboard/locations/create">
             <CirclePlus className="mr-2 h-4 w-4" />
-            Add Location
+            Add Locations
           </Link>
         </Button>
       </div>

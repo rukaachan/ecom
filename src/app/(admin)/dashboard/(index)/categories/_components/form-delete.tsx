@@ -1,11 +1,11 @@
 "use client";
 
 import { Trash } from "lucide-react";
-import type { ActionResult } from "next/dist/server/app-render/types";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import { deleteCategory } from "../lib/actions";
 import { Button } from "@/components/ui/button";
+import type { ActionResult } from "@/type/index";
+import { deleteCategory } from "../lib/actions";
 
 const initialState: ActionResult = {
   error: "",
@@ -27,7 +27,8 @@ function SubmitButton() {
 }
 
 export default function FormDelete({ id }: FormDeleteProps) {
-  const deleteCategoryWithId = (_: unknown, formData: FormData) => deleteCategory(_, formData, id);
+  const deleteCategoryWithId = (state: ActionResult, formData: FormData) =>
+    deleteCategory(state, formData);
 
   const [_state, formAction] = useActionState(deleteCategoryWithId, initialState);
 

@@ -24,7 +24,7 @@ export async function postCategory(_: unknown, formData: FormData): Promise<Acti
       },
     });
     revalidatePath("/dashboard/categories");
-  } catch (error) {
+  } catch (_error) {
     return {
       error: "Failed to create category",
     };
@@ -50,7 +50,7 @@ export async function updateCategory(
 
   if (id === undefined) {
     return {
-      error: "Category ID is not found",
+      error: "Category ID not found",
     };
   }
 
@@ -64,7 +64,7 @@ export async function updateCategory(
       },
     });
     revalidatePath("/dashboard/categories");
-  } catch (error) {
+  } catch (_error) {
     return {
       error: "Failed to update category",
     };
@@ -73,21 +73,20 @@ export async function updateCategory(
   return redirect("/dashboard/categories");
 }
 
-export async function deleteCategory(_: unknown, formData: FormData): Promise<ActionResult> {
-  
+export async function deleteCategory(
+  _state: ActionResult,
+  formData: FormData
+): Promise<ActionResult> {
   const id = formData.get("id");
 
-  
   if (!id) {
     return {
       error: "Category ID is required",
     };
   }
 
-  
   const categoryId = parseInt(id.toString(), 10);
 
-  
   if (Number.isNaN(categoryId)) {
     return {
       error: "Invalid category ID",
@@ -101,7 +100,7 @@ export async function deleteCategory(_: unknown, formData: FormData): Promise<Ac
       },
     });
     revalidatePath("/dashboard/categories");
-  } catch (error) {
+  } catch (_error) {
     return {
       error: "Failed to delete category. It might be associated with products.",
     };

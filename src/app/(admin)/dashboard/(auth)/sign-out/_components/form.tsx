@@ -1,8 +1,8 @@
 "use client";
 
 import { useFormState, useFormStatus } from "react-dom";
-import { logout } from "../lib/actions";
 import { Button } from "@/components/ui/button";
+import { logout } from "../lib/actions";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -15,7 +15,7 @@ function SubmitButton() {
 
 export function LogoutForm() {
   const [, formAction] = useFormState(logout, null);
-  
+
   return (
     <form action={formAction}>
       <SubmitButton />

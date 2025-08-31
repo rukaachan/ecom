@@ -18,7 +18,7 @@ export async function getCategoryById(id: string) {
     });
 
     return category;
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 }

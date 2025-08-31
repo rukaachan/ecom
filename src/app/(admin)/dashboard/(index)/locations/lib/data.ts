@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "../../../../../../../lib/prisma";
 
 export async function getLocations() {
@@ -18,7 +20,7 @@ export async function getLocationById(id: string) {
     });
 
     return location;
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 }

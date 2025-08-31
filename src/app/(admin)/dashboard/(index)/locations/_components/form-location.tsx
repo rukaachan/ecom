@@ -49,8 +49,8 @@ export default function FormLocation({ data = null, type = "ADD" }: FormLocation
       state.error.includes("invalid"));
 
   return (
-    <div className="flex justify-center w-full my-5">
-      <div className="w-full max-w-2xl mx-auto">
+    <div className="flex justify-center items-center min-h-screen py-8">
+      <div className="w-full max-w-2xl">
         <div className="mb-5">
           <Link href="/dashboard/locations" className="flex items-center w-fit">
             <SquareChevronLeft className="mr-2" />
@@ -59,7 +59,7 @@ export default function FormLocation({ data = null, type = "ADD" }: FormLocation
         </div>
         <form action={formAction}>
           <Card>
-            <CardHeader>
+            <CardHeader className="text-center">
               <CardTitle className="text-xl">Location Details</CardTitle>
               <CardDescription>Add a new location to organize your products.</CardDescription>
             </CardHeader>
@@ -68,9 +68,14 @@ export default function FormLocation({ data = null, type = "ADD" }: FormLocation
                 {state?.error && !isSchemaError && (
                   <Alert variant="destructive">
                     <AlertCircleIcon />
-                    <AlertTitle>Error</AlertTitle>
+                    <AlertTitle>Location Operation Failed</AlertTitle>
                     <AlertDescription>
-                      <p>There was an error processing your request.</p>
+                      <p>There was an error processing your location request.</p>
+                      <ul className="list-inside list-disc text-sm">
+                        <li>Check the location name</li>
+                        <li>Ensure all required fields are filled</li>
+                        <li>Verify the location doesn't already exist</li>
+                      </ul>
                     </AlertDescription>
                   </Alert>
                 )}
@@ -92,7 +97,7 @@ export default function FormLocation({ data = null, type = "ADD" }: FormLocation
                   required
                 />
               </div>
-              <div className="flex space-x-1 mt-6">
+              <div className="flex justify-center space-x-4 mt-6">
                 <Button type="submit" variant="outline">
                   Discard
                 </Button>

@@ -11,11 +11,13 @@ export async function POST() {
     }
 
     const sessionCookie = lucia.createBlankSessionCookie();
-    const response = NextResponse.redirect(new URL("/dashboard/sign-in", process.env.NEXTAUTH_URL || "http://localhost:3000"));
+    const response = NextResponse.redirect(
+      new URL("/dashboard/sign-in", process.env.NEXTAUTH_URL || "http://localhost:3000")
+    );
     response.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
     return response;
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: "Failed to logout" }, { status: 500 });
   }
 }

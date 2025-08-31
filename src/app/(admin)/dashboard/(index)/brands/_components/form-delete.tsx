@@ -5,7 +5,7 @@ import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 import type { ActionResult } from "@/type/index";
-import { deleteLocation } from "../lib/actions";
+import { deleteBrand } from "../lib/actions";
 
 const initialState: ActionResult = {
   error: "",
@@ -27,10 +27,10 @@ function SubmitButton() {
 }
 
 export default function FormDelete({ id }: FormDeleteProps) {
-  const deleteLocationWithId = (state: ActionResult, formData: FormData) =>
-    deleteLocation(state, formData);
+  const deleteBrandWithId = (state: ActionResult, formData: FormData) =>
+    deleteBrand(state, formData);
 
-  const [_state, formAction] = useActionState(deleteLocationWithId, initialState);
+  const [_state, formAction] = useActionState(deleteBrandWithId, initialState);
 
   return (
     <form action={formAction}>

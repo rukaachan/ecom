@@ -2,19 +2,20 @@ import { SquareChevronLeft, Trash } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import type { DeletePageProps } from "@/type";
 import { deleteLocation } from "../../lib/actions";
 import { getLocationById } from "../../lib/data";
 
-interface DeletePageProps {
-  params: Promise<{ id: string }>;
-}
-
-export default async function DeletePage({ params }: DeletePageProps) {
+export default async function LocationsDeletePage({ params }: DeletePageProps) {
   const data = await getLocationById((await params).id);
 
   if (!data) {
     return redirect("/dashboard/locations");
   }
+
+  const deleteLocationWithId = async (formData: FormData): Promise<void> => {
+    await deleteLocation({ error: "" }, formData);
+  };
 
   return (
     <div className="flex justify-center w-full my-5">
@@ -37,7 +38,7 @@ export default async function DeletePage({ params }: DeletePageProps) {
               <Button asChild variant="outline">
                 <Link href="/dashboard/locations">Cancel</Link>
               </Button>
-              <form action={deleteLocation}>
+              <form action={deleteLocationWithId}>
                 <input type="hidden" name="id" value={data.id} />
                 <Button type="submit" variant="destructive">
                   Delete Location

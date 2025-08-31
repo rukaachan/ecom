@@ -60,27 +60,27 @@ const data = {
     },
     {
       title: "Location",
-      url: "/",
+      url: "/dashboard/locations",
       icon: MapPin,
     },
     {
       title: "Brands",
-      url: "/",
+      url: "/dashboard/brands",
       icon: Building,
     },
     {
       title: "Products",
-      url: "/",
+      url: "/dashboard/products",
       icon: Package,
     },
     {
       title: "Orders",
-      url: "/",
+      url: "/dashboard/orders",
       icon: ShoppingCart,
     },
     {
       title: "Customers",
-      url: "/",
+      url: "/dashboard/customers",
       icon: User,
     },
   ],
