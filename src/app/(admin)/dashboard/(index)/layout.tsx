@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
 import Header from "./_components/header";
 import Sidebar from "./_components/sidebar";
+import type { UserRole } from "@/type";
 
 export default async function DashboardLayout({
   children,
@@ -9,7 +10,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }>) {
   // Server-side authentication verification for Next.js Server Components
-  const { user, session } = await getUser();
+  const { user, session } = (await getUser()) as { session: any; user: UserRole | null };
 
   if (!session) {
     return redirect("/dashboard/sign-in");

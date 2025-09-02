@@ -63,6 +63,9 @@ try {
         attributes: {},
       };
     },
+    invalidateSession: async () => {
+      // Mock implementation - do nothing
+    },
   };
 }
 
@@ -108,7 +111,12 @@ export const getUser = cache(
         // Silently fail cookie setting errors
       }
 
-      return result;
+      // Ensure we return the correct type
+      if (result.user && result.session) {
+        return { user: result.user, session: result.session };
+      } else {
+        return { user: null, session: null };
+      }
     } catch (error) {
       return {
         user: null,
@@ -119,15 +127,16 @@ export const getUser = cache(
 );
 
 // Type declarations for Lucia
-declare module "lucia" {
-  interface Register {
-    Lucia: typeof luciaInstance;
-    UserId: number;
-    DatabaseUserAttributes: {
-      id: number;
-      name: string;
-      email: string;
-      role: Role;
-    };
-  }
-}
+// Type declarations for Lucia
+// declare module "lucia" {
+//   interface Register {
+//     Lucia: typeof luciaInstance;
+//     UserId: number;
+//     DatabaseUserAttributes: {
+//       id: number;
+//       name: string;
+//       email: string;
+//       role: Role;
+//     };
+//   }
+// }

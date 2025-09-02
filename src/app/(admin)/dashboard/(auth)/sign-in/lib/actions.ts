@@ -61,6 +61,7 @@ async function SignIn(_: unknown, formData: FormData): Promise<ActionResult> {
 
     // Return success without redirecting directly
     return {
+      error: "",
       success: true,
     };
   } catch (_error) {

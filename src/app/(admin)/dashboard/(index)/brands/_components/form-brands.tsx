@@ -2,18 +2,13 @@
 
 import type { Brand } from "@prisma/client";
 import { AlertCircleIcon, SquareChevronLeft } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getImageUrl } from "@/lib/supabase";
@@ -44,13 +39,8 @@ export default function FormBrands({ data, type }: FormBrandsProps) {
     return updateBrandWithId(_, formData, data?.id ?? 0);
   };
 
-  const enhancedFormAction = async (
-    state: ActionResult,
-    formData: FormData,
-  ) => {
-    return type === "ADD"
-      ? postBrand(state, formData)
-      : updateWithId(state, formData);
+  const enhancedFormAction = async (state: ActionResult, formData: FormData) => {
+    return type === "ADD" ? postBrand(state, formData) : updateWithId(state, formData);
   };
 
   const [state, formAction] = useActionState(enhancedFormAction, initialState);
@@ -75,9 +65,7 @@ export default function FormBrands({ data, type }: FormBrandsProps) {
           <Card>
             <CardHeader>
               <CardTitle className="text-xl">Brand Details</CardTitle>
-              <CardDescription>
-                Add a new brand to organize your products.
-              </CardDescription>
+              <CardDescription>Add a new brand to organize your products.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="mb-1">
@@ -123,15 +111,10 @@ export default function FormBrands({ data, type }: FormBrandsProps) {
                 />
                 {data?.logo && (
                   <div className="mt-2">
-                    <p className="text-sm text-muted-foreground">
-                      Current image:
-                    </p>
+                    <p className="text-sm text-muted-foreground">Current image:</p>
                     <div className="relative w-32 h-32">
-                      <img
-                        src={
-                          getImageUrl(data.logo, "brands") ||
-                          "/placeholder-image.png"
-                        }
+                      <Image
+                        src={getImageUrl(data.logo, "brands") || "/placeholder-image.png"}
                         alt="Current brand logo"
                         className="object-cover rounded"
                         width={128}

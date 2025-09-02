@@ -4,7 +4,8 @@ import { lucia } from "@/lib/auth";
 
 export async function POST() {
   try {
-    const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
+    const cookieStore = await cookies();
+    const sessionId = cookieStore.get(lucia.sessionCookieName)?.value ?? null;
 
     if (sessionId) {
       await lucia.invalidateSession(sessionId);

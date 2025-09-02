@@ -26,32 +26,27 @@ import {
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "Admin",
+    email: "admin@example.com",
+    avatar: "/avatars/admin.jpg",
   },
   teams: [
     {
-      name: "Acme Inc",
+      name: "E-Commerce Admin",
       logo: GalleryVerticalEnd,
       plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
     },
   ],
   navMain: [
     {
-      title: "Home",
-      url: "/",
+      title: "Dashboard",
+      url: "/dashboard",
       icon: Home,
+    },
+    {
+      title: "Products",
+      url: "/dashboard/products",
+      icon: Package,
     },
     {
       title: "Categories",
@@ -59,19 +54,9 @@ const data = {
       icon: Archive,
     },
     {
-      title: "Location",
-      url: "/dashboard/locations",
-      icon: MapPin,
-    },
-    {
       title: "Brands",
       url: "/dashboard/brands",
       icon: Building,
-    },
-    {
-      title: "Products",
-      url: "/dashboard/products",
-      icon: Package,
     },
     {
       title: "Orders",
@@ -82,6 +67,11 @@ const data = {
       title: "Customers",
       url: "/dashboard/customers",
       icon: User,
+    },
+    {
+      title: "Locations",
+      url: "/dashboard/locations",
+      icon: MapPin,
     },
   ],
 };
