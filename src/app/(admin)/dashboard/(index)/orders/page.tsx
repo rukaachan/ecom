@@ -1,22 +1,30 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CirclePlus } from "lucide-react";
+import Link from "next/link";
+import { DataTable } from "@/components/data-table";
+import { Button } from "@/components/ui/button";
+import { columns } from "./columns";
+import { getOrders } from "./lib/data";
 
-export default function OrdersPage() {
+export default async function OrdersPage() {
+  const data = await getOrders();
+
   return (
-    <div className="px-4 py-5">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold">Orders</h1>
-        <p className="text-muted-foreground">Manage customer orders</p>
+    <div className="w-full px-4 py-5">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold mb-2">Orders</h1>
+          <p className="text-muted-foreground">Manage your orders</p>
+        </div>
+        <Button asChild className="w-full sm:w-auto">
+          <Link href="/dashboard/orders/create">
+            <CirclePlus className="mr-2 h-4 w-4" />
+            Add Orders
+          </Link>
+        </Button>
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Orders Overview</CardTitle>
-          <CardDescription>View and manage customer orders</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Orders management functionality will be implemented here.</p>
-        </CardContent>
-      </Card>
+      <div className="overflow-hidden rounded-md border">
+        <DataTable columns={columns} data={data} />
+      </div>
     </div>
   );
 }
