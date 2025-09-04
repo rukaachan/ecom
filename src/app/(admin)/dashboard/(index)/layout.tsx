@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
+import type { UserRole } from "@/type";
 import Header from "./_components/header";
 import Sidebar from "./_components/sidebar";
-import type { UserRole } from "@/type";
 
 export default async function DashboardLayout({
   children,

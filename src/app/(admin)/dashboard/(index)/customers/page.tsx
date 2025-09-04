@@ -1,22 +1,30 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CirclePlus } from "lucide-react";
+import Link from "next/link";
+import { DataTable } from "@/components/data-table";
+import { Button } from "@/components/ui/button";
+import { columns } from "./columns";
+import { getCustomers } from "./lib/data";
 
-export default function CustomersPage() {
+export default async function CustomersPage() {
+  const data = await getCustomers();
+
   return (
-    <div className="px-4 py-5">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold">Customers</h1>
-        <p className="text-muted-foreground">Manage customer accounts</p>
+    <div className="w-full px-4 py-5">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold mb-2">Customers</h1>
+          <p className="text-muted-foreground">Manage your customers</p>
+        </div>
+        <Button asChild className="w-full sm:w-auto">
+          <Link href="/dashboard/customers/create">
+            <CirclePlus className="mr-2 h-4 w-4" />
+            Add Customers
+          </Link>
+        </Button>
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Customers Overview</CardTitle>
-          <CardDescription>View and manage customer accounts</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Customer management functionality will be implemented here.</p>
-        </CardContent>
-      </Card>
+      <div className="overflow-hidden rounded-md border">
+        <DataTable columns={columns} data={data} />
+      </div>
     </div>
   );
 }

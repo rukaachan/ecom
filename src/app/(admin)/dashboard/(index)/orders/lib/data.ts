@@ -1,5 +1,5 @@
-import { TColumn } from "../columns";
 import { getImageUrl } from "@/lib/supabase";
+import type { TColumn } from "../columns";
 
 export async function getOrders() {
   try {

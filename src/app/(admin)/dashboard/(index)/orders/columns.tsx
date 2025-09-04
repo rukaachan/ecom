@@ -1,8 +1,8 @@
 "use client";
 
 import type { OrderStatus } from "@prisma/client";
-import Image from "next/image";
 import type { ColumnDef } from "@tanstack/react-table";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 
 type TProduct = {
@@ -66,9 +66,7 @@ export const columns: ColumnDef<TColumn>[] = [
     header: "Status Order",
     cell: ({ row }) => {
       return (
-        <Badge
-          variant={row.original.status === "cancelled" ? "destructive" : "default"}
-        >
+        <Badge variant={row.original.status === "cancelled" ? "destructive" : "default"}>
           {row.original.status}
         </Badge>
       );
