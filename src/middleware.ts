@@ -4,7 +4,7 @@ import { lucia } from "@/lib/auth-edge";
 
 export async function middleware(request: NextRequest) {
   // Paths that don't require authentication
-  const publicPaths = ["/", "/dashboard/sign-in", "/dashboard/sign-up", "/api"];
+  const publicPaths = ["/", "/sign-in", "/sign-up", "/api"];
 
   const { pathname } = request.nextUrl;
 
@@ -24,7 +24,7 @@ export async function middleware(request: NextRequest) {
   if (!sessionId) {
     // No session and trying to access protected route
     if (!isPublicPath) {
-      return NextResponse.redirect(new URL("/dashboard/sign-in", request.url));
+      return NextResponse.redirect(new URL("/sign-in", request.url));
     }
     return NextResponse.next();
   }
@@ -33,7 +33,7 @@ export async function middleware(request: NextRequest) {
   // Only session cookie existence is verified here for performance
 
   // For auth pages, we still want to redirect authenticated users
-  if ((pathname === "/dashboard/sign-in" || pathname === "/dashboard/sign-up")) {
+  if ((pathname === "/sign-in" || pathname === "/sign-up")) {
     // Full session validation is handled on the server-side to ensure security
     // while maintaining middleware performance in the edge environment
   }

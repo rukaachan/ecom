@@ -13,11 +13,11 @@ export default async function DashboardLayout({
   const { user, session } = (await getUser()) as { session: any; user: UserRole | null };
 
   if (!session) {
-    return redirect("/dashboard/sign-in");
+    return redirect("/sign-in");
   }
 
   if (user && user.role !== "superadmin") {
-    return redirect("/dashboard/sign-in");
+    return redirect("/sign-in");
   }
 
   return (

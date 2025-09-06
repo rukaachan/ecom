@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "./globals.css";
+import "../../globalsLanding.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -10,10 +10,11 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "E-Commerce Admin Dashboard",
-  description: "Professional admin dashboard for managing e-commerce operations",
+  description:
+    "Professional admin dashboard for managing e-commerce operations",
 };
 
-export default function RootLayout({
+export default function AuthRootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

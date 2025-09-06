@@ -13,7 +13,7 @@ export async function POST() {
 
     const sessionCookie = lucia.createBlankSessionCookie();
     const response = NextResponse.redirect(
-      new URL("/dashboard/sign-in", process.env.NEXTAUTH_URL || "http://localhost:3000")
+      new URL("/sign-in", process.env.NEXTAUTH_URL || "http://localhost:3000")
     );
     response.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 

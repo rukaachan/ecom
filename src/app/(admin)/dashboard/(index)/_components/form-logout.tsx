@@ -19,7 +19,7 @@ export function FormLogout() {
   useEffect(() => {
     if (state.success) {
       // Redirect to sign-in page after successful logout
-      router.push("/dashboard/sign-in");
+      router.push("/sign-in");
       router.refresh(); // Refresh the page to ensure the user is logged out
     }
   }, [state.success, router]);
