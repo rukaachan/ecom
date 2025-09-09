@@ -33,14 +33,14 @@ A modern e-commerce admin dashboard built with Next.js 15, TypeScript, and Prism
 First, install the dependencies:
 
 ```bash
-bun install
+pnpm install
 ```
 
 Set up the database:
 
 ```bash
-bunx prisma generate
-bunx prisma migrate dev
+pnpm dlx prisma generate
+pnpm dlx prisma migrate dev
 ```
 
 Create a `.env` file based on `.env.example` and fill in your environment variables.
@@ -48,20 +48,20 @@ Create a `.env` file based on `.env.example` and fill in your environment variab
 Run the development server:
 
 ```bash
-bun dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Available Scripts
 
-- `bun dev` - Runs the development server
-- `bun build` - Builds the application for production
-- `bun start` - Runs the built application
-- `bun run lint` - Checks for linting errors
-- `bun run lint:fix` - Fixes linting errors automatically
-- `bun run format` - Formats code according to Biome configuration
-- `bun run type-check` - Runs TypeScript type checking
+- `pnpm dev` - Runs the development server
+- `pnpm build` - Builds the application for production
+- `pnpm start` - Runs the built application
+- `pnpm lint` - Checks for linting errors
+- `pnpm lint:fix` - Fixes linting errors automatically
+- `pnpm format` - Formats code according to Biome configuration
+- `pnpm type-check` - Runs TypeScript type checking
 
 ## Project Structure
 

@@ -33,7 +33,7 @@ export async function middleware(request: NextRequest) {
   // Only session cookie existence is verified here for performance
 
   // For auth pages, we still want to redirect authenticated users
-  if ((pathname === "/sign-in" || pathname === "/sign-up")) {
+  if (pathname === "/sign-in" || pathname === "/sign-up") {
     // Full session validation is handled on the server-side to ensure security
     // while maintaining middleware performance in the edge environment
   }
@@ -42,5 +42,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|assets).*)"],
 };

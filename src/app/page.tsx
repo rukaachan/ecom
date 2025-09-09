@@ -1,12 +1,5 @@
-import { redirect } from "next/navigation";
-import { getUser } from "@/lib/auth";
+import LandingPage from "./(customer)/(auth)/(index)/page";
 
-export default async function Home() {
-  const { session } = await getUser();
-
-  if (session) {
-    return redirect("/dashboard");
-  }
-
-  return redirect("/sign-in");
+export default function Home() {
+  return <LandingPage />;
 }

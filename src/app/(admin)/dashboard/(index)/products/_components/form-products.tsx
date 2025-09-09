@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getImageUrl } from "@/lib/supabase";
+import { getImageUrl } from "@/lib/local-storage";
 import type { ActionResult } from "@/type";
 import { getBrands } from "../../brands/lib/data";
 import { getCategories } from "../../categories/lib/data";

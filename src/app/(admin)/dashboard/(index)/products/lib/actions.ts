@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { ALLOW_MIME_TYPES } from "@/lib/schema";
-import { deleteFile, uploadFile } from "@/lib/supabase";
+import { deleteFile, uploadFile } from "@/lib/local-storage";
 import type { ActionResult } from "@/type";
 import prisma from "../../../../../../../lib/prisma";
 

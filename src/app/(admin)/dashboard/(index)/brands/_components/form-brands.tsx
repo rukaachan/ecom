@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getImageUrl } from "@/lib/supabase";
+import { getImageUrl } from "@/lib/local-storage";
 import type { ActionResult } from "@/type";
 import { postBrand, updateBrandWithId } from "../lib/actions";
 

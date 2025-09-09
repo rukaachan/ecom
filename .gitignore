@@ -2,6 +2,12 @@
 
 # dependencies
 /node_modules
+/.pnpm-store
+
+# pnpm
+.pnpm-debug.log
+
+
 /.pnp
 .pnp.*
 .yarn/*
@@ -44,8 +50,7 @@ next-env.d.ts
 .serena/
 .serena/*
 
-# bun
-.bun-version
+
 
 # biome
 .biome/

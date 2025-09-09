@@ -10,8 +10,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "E-Commerce Admin Dashboard",
-  description:
-    "Professional admin dashboard for managing e-commerce operations",
+  description: "Professional admin dashboard for managing e-commerce operations",
 };
 
 export default function AuthRootLayout({
@@ -19,9 +18,5 @@ export default function AuthRootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={`${poppins.variable} antialiased`}>{children}</body>
-    </html>
-  );
+  return <>{children}</>;
 }

@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { getImageUrl } from "@/lib/supabase";
+import { getImageUrl } from "@/lib/local-storage";
 import FormDelete from "./_components/form-delete";
 
 const BrandImage = ({ brand }: { brand: Brand }) => {

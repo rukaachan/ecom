@@ -1,4 +1,5 @@
-import { getImageUrl } from "@/lib/supabase";
+import prisma from "../../../../../../../lib/prisma";
+import { getImageUrl } from "@/lib/local-storage";
 import type { TColumn } from "../columns";
 
 export async function getOrders() {

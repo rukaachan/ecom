@@ -23,6 +23,12 @@ export const schemaCategory = z.object({
     .min(4, { message: "Name must be at least 4 characters long" }),
 });
 
+export const schemaSignUp = schemaSignIn.extend({
+  name: z
+    .string({ required_error: "Name is required" })
+    .min(4, { message: "Name must be at least 4 characters long" }),
+});
+
 export const schemaBrands = schemaCategory.extend({
   image: z
     .instanceof(File)

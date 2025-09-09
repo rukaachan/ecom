@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { getImageUrl } from "@/lib/supabase";
+import { getImageUrl } from "@/lib/local-storage";
 import { dateFormat, rupiahFormat } from "@/lib/utils";
 import FormDelete from "./_components/form-delete";
 

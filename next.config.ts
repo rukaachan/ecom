@@ -2,16 +2,16 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname:
-          process.env.NEXT_PUBLIC_SUPABASE_URL?.replace("https://", "") ||
-          "your-supabase-project.supabase.co",
-        port: "",
-        pathname: "/storage/v1/object/public/**",
-      },
-    ],
+    // Enable modern image formats
+    formats: ["image/webp", "image/avif"],
+
+    // Increase cache TTL for better performance
+    minimumCacheTTL: 60 * 60 * 24 * 7, // 1 week
+
+    // Configure quality settings
+    qualities: [25, 50, 75, 100],
+
+    // No remote patterns needed for local image storage
   },
 };
 

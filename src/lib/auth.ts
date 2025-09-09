@@ -4,8 +4,23 @@ import { Lucia, type Session, type User } from "lucia";
 import { cookies } from "next/headers";
 import { cache } from "react";
 
+// Define our custom user attributes
+type DatabaseUserAttributes = {
+  id: number;
+  name: string;
+  email: string;
+  role: Role;
+};
+
+// Create a type-safe Lucia instance
+interface Register {
+  Lucia: typeof lucia;
+  UserId: number;
+  DatabaseUserAttributes: DatabaseUserAttributes;
+}
+
 // Always try to initialize the real Lucia instance
-let luciaInstance: any;
+let lucia: any;
 
 try {
   // Check if we're in an environment where we can use Prisma
@@ -17,7 +32,7 @@ try {
 
     const adapter = new PrismaAdapter(prisma.session, prisma.user);
 
-    luciaInstance = new Lucia(adapter, {
+    lucia = new Lucia(adapter, {
       sessionCookie: {
         expires: false,
         attributes: {
@@ -38,7 +53,7 @@ try {
   }
 } catch (error) {
   // Fallback mock for edge environments or errors
-  luciaInstance = {
+  lucia = {
     sessionCookieName: "auth_session",
     validateSession: async () => {
       return {
@@ -69,7 +84,7 @@ try {
   };
 }
 
-export const lucia = luciaInstance;
+export { lucia };
 
 export const getUser = cache(
   async (): Promise<{ user: User; session: Session } | { user: null; session: null }> => {
@@ -125,18 +140,3 @@ export const getUser = cache(
     }
   }
 );
-
-// Type declarations for Lucia
-// Type declarations for Lucia
-// declare module "lucia" {
-//   interface Register {
-//     Lucia: typeof luciaInstance;
-//     UserId: number;
-//     DatabaseUserAttributes: {
-//       id: number;
-//       name: string;
-//       email: string;
-//       role: Role;
-//     };
-//   }
-// }

@@ -15,6 +15,7 @@ export interface DeletePageProps {
 
 export interface UserRole extends User {
   role: string;
+  name: string;
 }
 
 export interface UserRoleEmail extends User {

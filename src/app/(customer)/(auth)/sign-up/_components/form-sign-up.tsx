@@ -1,13 +1,11 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import * as React from "react";
-import type { ActionResult } from "@/type";
-import signin from "../lib/actions";
-import { usePasswordVisibility } from "./use-password-visibility";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import { usePasswordVisibility } from "@/hooks/use-password-visibility";
+import type { ActionResult } from "@/type";
+import { signup } from "../lib/actions";
 
 const initialFormState: ActionResult = {
   error: "",
@@ -22,13 +20,13 @@ function SubmitButton() {
       disabled={pending}
       className="p-[12px_24px] bg-[#0D5CD7] rounded-full text-center font-semibold text-white"
     >
-      {pending ? "Loading..." : "Sign In to My Account"}
+      {pending ? "Loading..." : "Create New Account"}
     </button>
   );
 }
 
-export function SignInForm() {
-  const [state, formAction] = useActionState(signin, initialFormState);
+export function SignUpForm() {
+  const [state, formAction] = useActionState(signup, initialFormState);
   const { showPassword, togglePasswordVisibility } = usePasswordVisibility();
 
   return (
@@ -44,13 +42,30 @@ export function SignInForm() {
           height={60}
         />
       </div>
-      <h1 className="font-bold text-2xl leading-[34px]">Sign In</h1>
+      <h1 className="font-bold text-2xl leading-[34px]">Sign Up</h1>
       {state.error !== "" && (
         <div className="border border-red-300 text-red-500 p-3 rounded">
           <h4 className="font-semibold">Error</h4>
           <p className="text-sm">{state.error}</p>
         </div>
       )}
+      <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
+        <div className="flex shrink-0">
+          <Image
+            src="/assets/icons/profile-circle.svg"
+            alt="icon"
+            width={24}
+            height={24}
+          />
+        </div>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          className="appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black"
+          placeholder="Write your complete name"
+        />
+      </div>
       <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
         <div className="flex shrink-0">
           <Image
@@ -62,7 +77,7 @@ export function SignInForm() {
         </div>
         <input
           type="email"
-          id={"email"}
+          id="email"
           name="email"
           className="appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black"
           placeholder="Write your email address"
@@ -80,7 +95,7 @@ export function SignInForm() {
           </div>
           <input
             type={showPassword ? "text" : "password"}
-            id={"password"}
+            id="password"
             name="password"
             className="appearance-none outline-none w-full placeholder:text-[#616369] placeholder:font-normal font-semibold text-black"
             placeholder="Write your password"
@@ -91,11 +106,7 @@ export function SignInForm() {
             onClick={togglePasswordVisibility}
           >
             <Image
-              src={
-                showPassword
-                  ? "/assets/icons/eye.svg"
-                  : "/assets/icons/lock.svg"
-              }
+              src={showPassword ? "/assets/icons/eye.svg" : "/assets/icons/lock.svg"}
               alt={showPassword ? "hide password" : "show password"}
               width={24}
               height={24}
@@ -112,10 +123,10 @@ export function SignInForm() {
       <div className="flex flex-col gap-3">
         <SubmitButton />
         <Link
-          href="/sign-up"
+          href="/sign-in"
           className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]"
         >
-          Sign Up
+          Sign In
         </Link>
       </div>
     </form>
