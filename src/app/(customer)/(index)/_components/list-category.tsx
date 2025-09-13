@@ -20,19 +20,10 @@ export default async function ListCategory() {
       </div>
       <div className="grid grid-cols-4 gap-[30px]">
         {categories.map((item) => (
-          <Link
-            key={`${item.name + item.id}`}
-            href="/category/phones"
-            className="categories-card"
-          >
+          <Link key={`${item.name + item.id}`} href="/category/phones" className="categories-card">
             <div className="bg-white flex items-center gap-[14px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
               <div className="w-12 h-12 flex shrink-0 rounded-full bg-[#0D5CD7] items-center justify-center overflow-hidden">
-                <Image
-                  src="/assets/icons/mobile.svg"
-                  alt="mobile icon"
-                  width={24}
-                  height={24}
-                />
+                <Image src="/assets/icons/mobile.svg" alt="mobile icon" width={24} height={24} />
               </div>
               <div className="flex flex-col gap-[2px]">
                 <p className="font-semibold leading-[22px]">{`${item.name}`}</p>

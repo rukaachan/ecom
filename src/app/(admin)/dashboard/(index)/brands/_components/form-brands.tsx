@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getImageUrl } from "@/lib/local-storage";
+import { getImageUrl } from "@/lib/image-utils";
 import type { ActionResult } from "@/type";
 import { postBrand, updateBrandWithId } from "../lib/actions";
 
@@ -117,11 +117,9 @@ export default function FormBrands({ data, type }: FormBrandsProps) {
                         src={getImageUrl(data.logo, "brands") || "/placeholder-image.png"}
                         alt="Current brand logo"
                         className="object-cover rounded"
-                        width={128}
-                        height={128}
-                        onError={(e) => {
-                          e.currentTarget.src = "/placeholder-image.png";
-                        }}
+                        fill
+                        sizes="128px"
+                        unoptimized={true}
                       />
                     </div>
                   </div>

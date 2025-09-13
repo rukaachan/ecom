@@ -61,16 +61,10 @@ export default async function Navbar() {
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            <Link
-              href="/sign-in"
-              className="px-5 py-3 bg-white rounded-full font-semibold"
-            >
+            <Link href="/sign-in" className="px-5 py-3 bg-white rounded-full font-semibold">
               Sign In
             </Link>
-            <Link
-              href="/sign-up"
-              className="px-5 py-3 bg-white rounded-full font-semibold"
-            >
+            <Link href="/sign-up" className="px-5 py-3 bg-white rounded-full font-semibold">
               Sign Up
             </Link>
           </div>

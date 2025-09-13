@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getImageUrl } from "@/lib/local-storage";
+import { getImageUrl } from "@/lib/image-utils";
 import type { ActionResult } from "@/type";
 import { getBrands } from "../../brands/lib/data";
 import { getCategories } from "../../categories/lib/data";

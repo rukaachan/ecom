@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "./_components/navbar";
+import { Suspense } from "react";
+import ListBrands from "./_components/list-brands";
 import ListCategory from "./_components/list-category";
 import ListProduts from "./_components/list-products";
-import ListBrands from "./_components/list-brands";
-import { Suspense } from "react";
+import Navbar from "./_components/navbar";
 
 export default function LandingPage() {
   return (
@@ -23,17 +23,13 @@ export default function LandingPage() {
                   className="object-contain"
                 />
               </div>
-              <p className="font-semibold text-sm">
-                Most Popular 100th Product in Belanja
-              </p>
+              <p className="font-semibold text-sm">Most Popular 100th Product in Belanja</p>
             </div>
             <div className="flex flex-col gap-[14px]">
-              <h1 className="font-bold text-[55px] leading-[55px]">
-                Working Faster 10x
-              </h1>
+              <h1 className="font-bold text-[55px] leading-[55px]">Working Faster 10x</h1>
               <p className="text-lg leading-[34px] text-[#6A7789]">
-                Dolor si amet lorem super-power features riches than any other
-                platform devices AI integrated.
+                Dolor si amet lorem super-power features riches than any other platform devices AI
+                integrated.
               </p>
             </div>
             <div className="flex items-center gap-3">
@@ -43,10 +39,7 @@ export default function LandingPage() {
               >
                 Add to Cart
               </Link>
-              <Link
-                href="/details"
-                className="p-[18px_24px] rounded-full font-semibold bg-white"
-              >
+              <Link href="/details" className="p-[18px_24px] rounded-full font-semibold bg-white">
                 View Details
               </Link>
             </div>
@@ -102,9 +95,7 @@ export default function LandingPage() {
               />
             </div>
             <div className="flex flex-col gap-[2px]">
-              <p className="font-semibold text-sm leading-[22px]">
-                Awesome product!
-              </p>
+              <p className="font-semibold text-sm leading-[22px]">Awesome product!</p>
               <p className="text-xs leading-[18px]">Jemmie Pemilia</p>
             </div>
           </div>
@@ -119,9 +110,7 @@ export default function LandingPage() {
               />
             </div>
             <div className="flex flex-col gap-[2px]">
-              <p className="font-semibold text-sm leading-[22px]">
-                Money saver 25%
-              </p>
+              <p className="font-semibold text-sm leading-[22px]">Money saver 25%</p>
               <p className="text-xs leading-[18px]">Angga Risky</p>
             </div>
           </div>
@@ -136,9 +125,7 @@ export default function LandingPage() {
               />
             </div>
             <div className="flex flex-col gap-[2px]">
-              <p className="font-semibold text-sm leading-[22px]">
-                I love the warranty
-              </p>
+              <p className="font-semibold text-sm leading-[22px]">I love the warranty</p>
               <p className="text-xs leading-[18px]">Petina Malaka</p>
             </div>
           </div>
@@ -153,9 +140,7 @@ export default function LandingPage() {
               />
             </div>
             <div className="flex flex-col gap-[2px]">
-              <p className="font-semibold text-sm leading-[22px]">
-                Big deals ever!
-              </p>
+              <p className="font-semibold text-sm leading-[22px]">Big deals ever!</p>
               <p className="text-xs leading-[18px]">Udin Sarifun</p>
             </div>
           </div>

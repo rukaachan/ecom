@@ -35,12 +35,7 @@ export function SignUpForm() {
       className="w-[500px] bg-white p-[50px_30px] flex flex-col gap-5 rounded-3xl border border-[#E5E5E5]"
     >
       <div className="flex justify-center">
-        <Image
-          src="/assets/logos/logo-black.svg"
-          alt="logo"
-          width={150}
-          height={60}
-        />
+        <Image src="/assets/logos/logo-black.svg" alt="logo" width={150} height={60} />
       </div>
       <h1 className="font-bold text-2xl leading-[34px]">Sign Up</h1>
       {state.error !== "" && (
@@ -51,12 +46,7 @@ export function SignUpForm() {
       )}
       <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
         <div className="flex shrink-0">
-          <Image
-            src="/assets/icons/profile-circle.svg"
-            alt="icon"
-            width={24}
-            height={24}
-          />
+          <Image src="/assets/icons/profile-circle.svg" alt="icon" width={24} height={24} />
         </div>
         <input
           type="text"
@@ -68,12 +58,7 @@ export function SignUpForm() {
       </div>
       <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
         <div className="flex shrink-0">
-          <Image
-            src="/assets/icons/sms.svg"
-            alt="icon"
-            width={24}
-            height={24}
-          />
+          <Image src="/assets/icons/sms.svg" alt="icon" width={24} height={24} />
         </div>
         <input
           type="email"
@@ -86,12 +71,7 @@ export function SignUpForm() {
       <div className="flex flex-col gap-[10px]">
         <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
           <div className="flex shrink-0">
-            <Image
-              src="/assets/icons/lock.svg"
-              alt="icon"
-              width={24}
-              height={24}
-            />
+            <Image src="/assets/icons/lock.svg" alt="icon" width={24} height={24} />
           </div>
           <input
             type={showPassword ? "text" : "password"}

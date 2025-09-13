@@ -27,7 +27,7 @@ export default async function DashboardLayout({
   if (user && user.role !== "customer" && user.role !== "superadmin") {
     console.log(
       "User role not authorized for dashboard, redirecting to sign-in. User role:",
-      user?.role,
+      user?.role
     );
     return redirect("/sign-in");
   }

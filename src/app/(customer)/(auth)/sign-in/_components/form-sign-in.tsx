@@ -67,13 +67,7 @@ export function SignInForm() {
       )}
       <div className="flex items-center gap-[10px] rounded-full border border-[#E5E5E5] p-[12px_20px] focus-within:ring-2 focus-within:ring-[#FFC736] transition-all duration-300">
         <div className="flex shrink-0">
-          <Image
-            src="/assets/icons/sms.svg"
-            alt="icon"
-            width={24}
-            height={24}
-            unoptimized={true}
-          />
+          <Image src="/assets/icons/sms.svg" alt="icon" width={24} height={24} unoptimized={true} />
         </div>
         <input
           type="email"
@@ -107,11 +101,7 @@ export function SignInForm() {
             onClick={togglePasswordVisibility}
           >
             <Image
-              src={
-                showPassword
-                  ? "/assets/icons/eye.svg"
-                  : "/assets/icons/lock.svg"
-              }
+              src={showPassword ? "/assets/icons/eye.svg" : "/assets/icons/lock.svg"}
               alt={showPassword ? "hide password" : "show password"}
               width={24}
               height={24}

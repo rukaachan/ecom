@@ -4,7 +4,7 @@ import { lucia } from "@/lib/auth-edge";
 
 export async function middleware(request: NextRequest) {
   // Paths that don't require authentication
-  const publicPaths = ["/", "/sign-in", "/sign-up", "/api"];
+  const publicPaths = ["/", "/sign-in", "/sign-up", "/api", "/catalogs", "/dashboard/sign-in"];
 
   const { pathname } = request.nextUrl;
 

@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { schemaBrands } from "@/lib/schema";
 import { deleteFile, uploadFile } from "@/lib/local-storage";
+import { schemaBrands } from "@/lib/schema";
 import type { ActionResult } from "@/type";
 import prisma from "../../../../../../../lib/prisma";
 

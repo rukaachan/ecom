@@ -102,3 +102,6 @@ jspm_packages/
 # temporary files
 .tmp/
 temp/
+
+# uploaded files
+public/uploads/
