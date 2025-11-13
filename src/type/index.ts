@@ -22,3 +22,11 @@ export interface UserRoleEmail extends User {
   email: string;
   role: string;
 }
+
+export type TProduct = {
+  id: number;
+  image_url: string;
+  name: string;
+  category_name: string;
+  price: number;
+};

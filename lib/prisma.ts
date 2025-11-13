@@ -6,11 +6,11 @@ declare global {
 }
 
 // Initialize prisma client instance, reusing existing one in development
-const prisma = globalThis.prisma ?? new PrismaClient();
+const prismaClient = globalThis.prisma ?? new PrismaClient();
 
 // In development, assign the instance to globalThis for reuse
 if (process.env.NODE_ENV !== "production") {
-  globalThis.prisma = prisma;
+  globalThis.prisma = prismaClient;
 }
 
-export default prisma;
+export default prismaClient;
