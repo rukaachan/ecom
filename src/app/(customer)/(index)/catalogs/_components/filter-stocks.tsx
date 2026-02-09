@@ -21,11 +21,7 @@ export default function FilterStocks() {
         <span>Ready Stock</span>
       </label>*/}
       <FilterCheckboxItem type="stock" id={"avaible"} value="Avaible" />
-      <FilterCheckboxItem
-        type="stock"
-        id={"out_of_stock"}
-        value="Out Of Stock"
-      />
+      <FilterCheckboxItem type="stock" id={"out_of_stock"} value="Out Of Stock" />
     </div>
   );
 }

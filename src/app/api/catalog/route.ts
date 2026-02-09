@@ -1,7 +1,8 @@
-import { TFilter } from "@/hooks/use-filter";
+import type { Prisma } from "@prisma/client";
+import type { TFilter } from "@/hooks/use-filter";
 import { getImageUrl } from "@/lib/image-utils";
-import { TProduct } from "@/type";
-import { Prisma } from "@prisma/client";
+import type { TProduct } from "@/type";
+import prisma from "../../../../lib/prisma";
 
 export async function POST(request: Request) {
   try {
@@ -13,22 +14,6 @@ export async function POST(request: Request) {
         name: {
           contains: response.search,
           mode: "insensitive",
-        },
-      });
-    }
-
-    if (response.minPrice && response.minPrice > 0) {
-      QRQuery.push({
-        price: {
-          gte: response.minPrice,
-        },
-      });
-    }
-
-    if (response.minPrice && response.minPrice > 0) {
-      QRQuery.push({
-        price: {
-          gte: response.minPrice,
         },
       });
     }

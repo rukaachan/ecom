@@ -12,18 +12,17 @@ const ensureUploadDir = async (path: string) => {
   return uploadDir;
 };
 
-export const getImageUrl = (
-  name: string,
-  path: "brands" | "product" = "brands",
-) => {
-  // Return the local path to the image
+export const getImageUrl = (name: string, path: "brands" | "product" = "brands") => {
+  // Keep absolute public paths (e.g. "/assets/...") unchanged.
+  if (name.startsWith("/")) {
+    return name;
+  }
+
+  // Return the local uploaded image path.
   return `/uploads/${path}/${name}`;
 };
 
-export const uploadFile = async (
-  file: File,
-  path: "brands" | "product" = "brands",
-) => {
+export const uploadFile = async (file: File, path: "brands" | "product" = "brands") => {
   const fileType = file.type.split("/")[1];
   const filename = `${path}-${Date.now()}.${fileType}`;
 
@@ -40,10 +39,7 @@ export const uploadFile = async (
     // For PNG files, compress with advanced settings
     compressedBuffer = await sharp(buffer)
       .png({
-        quality: Math.min(
-          80,
-          Math.max(60, 100 - Math.floor(metadata.size! / 10000)),
-        ),
+        quality: Math.min(80, Math.max(60, 100 - Math.floor(metadata.size! / 10000))),
         compressionLevel: 9,
         adaptiveFiltering: true,
         palette: true,
@@ -51,8 +47,7 @@ export const uploadFile = async (
       .toBuffer();
   } else if (fileType === "jpeg" || fileType === "jpg") {
     // For JPEG files, compress with adaptive quality based on file size
-    const quality =
-      metadata.size! > 2000000 ? 70 : metadata.size! > 1000000 ? 75 : 80;
+    const quality = metadata.size! > 2000000 ? 70 : metadata.size! > 1000000 ? 75 : 80;
 
     compressedBuffer = await sharp(buffer)
       .jpeg({
@@ -63,16 +58,12 @@ export const uploadFile = async (
       .toBuffer();
   } else if (fileType === "webp") {
     // For WebP files, compress with adaptive quality
-    const quality =
-      metadata.size! > 2000000 ? 70 : metadata.size! > 1000000 ? 75 : 80;
+    const quality = metadata.size! > 2000000 ? 70 : metadata.size! > 1000000 ? 75 : 80;
 
-    compressedBuffer = await sharp(buffer)
-      .webp({ quality: quality })
-      .toBuffer();
+    compressedBuffer = await sharp(buffer).webp({ quality: quality }).toBuffer();
   } else {
     // For other image types, convert to JPEG with compression
-    const quality =
-      metadata.size! > 2000000 ? 70 : metadata.size! > 1000000 ? 75 : 80;
+    const quality = metadata.size! > 2000000 ? 70 : metadata.size! > 1000000 ? 75 : 80;
 
     compressedBuffer = await sharp(buffer)
       .jpeg({
@@ -105,10 +96,7 @@ export const uploadFile = async (
   return filename;
 };
 
-export const deleteFile = async (
-  filename: string,
-  path: "brands" | "product" = "brands",
-) => {
+export const deleteFile = async (filename: string, path: "brands" | "product" = "brands") => {
   try {
     const uploadDir = await ensureUploadDir(path);
     const filePath = join(uploadDir, filename);

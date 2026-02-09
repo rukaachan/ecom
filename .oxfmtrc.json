@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "ignorePatterns": [
+    ".next/**",
+    "out/**",
+    "build/**",
+    "coverage/**",
+    "public/uploads/**",
+    "node_modules/**",
+    "*.d.ts"
+  ]
+}

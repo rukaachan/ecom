@@ -26,10 +26,11 @@ export const useFilter = create<FilterState>()((set) => ({
     locations: null,
     categories: null,
   },
-  setFilter: (filter) => set((state) => ({
-    filter: {
-      ...state.filter,
-      ...filter
-    }
-  }))
+  setFilter: (filter) =>
+    set((state) => ({
+      filter: {
+        ...state.filter,
+        ...filter,
+      },
+    })),
 }));

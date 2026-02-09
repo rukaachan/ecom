@@ -39,8 +39,8 @@ pnpm install
 Set up the database:
 
 ```bash
-pnpm dlx prisma generate
-pnpm dlx prisma migrate dev
+pnpm prisma generate
+pnpm prisma migrate dev
 ```
 
 Create a `.env` file based on `.env.example` and fill in your environment variables.

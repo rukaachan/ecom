@@ -16,12 +16,7 @@ import type * as React from "react";
 import { FormLogout } from "@/app/(admin)/dashboard/(index)/_components/form-logout";
 import { NavMain } from "@/components/nav-main";
 import { TeamSwitcher } from "@/components/team-switcher";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
 
 // This is sample data.
 const data = {

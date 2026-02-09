@@ -10,11 +10,7 @@ interface filterCheckboxItemProps {
   type?: "stock" | "brands" | "locations" | "categories";
 }
 
-export default function FilterCheckboxItem({
-  id,
-  value,
-  type,
-}: filterCheckboxItemProps) {
+export default function FilterCheckboxItem({ id, value, type }: filterCheckboxItemProps) {
   const { filter, setFilter } = useFilter();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,16 +30,11 @@ export default function FilterCheckboxItem({
       case "brands":
         if (e.target.checked) {
           setFilter({
-            brands: [
-              ...(filter?.brands ?? []),
-              Number.parseInt(e.target.value, 10),
-            ],
+            brands: [...(filter?.brands ?? []), Number.parseInt(e.target.value, 10)],
           });
         } else {
           setFilter({
-            brands: filter?.brands?.filter(
-              (val) => val !== Number.parseInt(e.target.value, 10),
-            ),
+            brands: filter?.brands?.filter((val) => val !== Number.parseInt(e.target.value, 10)),
           });
         }
         break;
@@ -51,15 +42,12 @@ export default function FilterCheckboxItem({
       case "categories":
         if (e.target.checked) {
           setFilter({
-            categories: [
-              ...(filter?.categories ?? []),
-              Number.parseInt(e.target.value, 10),
-            ],
+            categories: [...(filter?.categories ?? []), Number.parseInt(e.target.value, 10)],
           });
         } else {
           setFilter({
             categories: filter?.categories?.filter(
-              (val) => val !== Number.parseInt(e.target.value, 10),
+              (val) => val !== Number.parseInt(e.target.value, 10)
             ),
           });
         }
@@ -68,15 +56,12 @@ export default function FilterCheckboxItem({
       case "locations":
         if (e.target.checked) {
           setFilter({
-            locations: [
-              ...(filter?.locations ?? []),
-              Number.parseInt(e.target.value, 10),
-            ],
+            locations: [...(filter?.locations ?? []), Number.parseInt(e.target.value, 10)],
           });
         } else {
           setFilter({
             locations: filter?.locations?.filter(
-              (val) => val !== Number.parseInt(e.target.value, 10),
+              (val) => val !== Number.parseInt(e.target.value, 10)
             ),
           });
         }
@@ -87,10 +72,7 @@ export default function FilterCheckboxItem({
   };
 
   return (
-    <label
-      key={`${id + value}`}
-      className="font-semibold flex items-center gap-3"
-    >
+    <label key={`${id + value}`} className="font-semibold flex items-center gap-3">
       <input
         id={`${id + value}`}
         type="checkbox"

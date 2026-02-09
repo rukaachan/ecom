@@ -30,7 +30,7 @@ export async function logout() {
       );
     }
 
-    return redirect("/sign-in");
+    return redirect("/dashboard/sign-in");
   } catch (_error) {
     return {
       error: "An unexpected error occurred during logout",

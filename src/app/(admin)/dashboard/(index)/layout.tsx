@@ -20,16 +20,15 @@ export default async function DashboardLayout({
 
   if (!session) {
     console.log("No session found, redirecting to sign-in");
-    return redirect("/sign-in");
+    return redirect("/dashboard/sign-in");
   }
 
-  // Allow both customer and superadmin roles to access the dashboard
-  if (user && user.role !== "customer" && user.role !== "superadmin") {
+  if (user && user.role !== "superadmin") {
     console.log(
       "User role not authorized for dashboard, redirecting to sign-in. User role:",
       user?.role
     );
-    return redirect("/sign-in");
+    return redirect("/dashboard/sign-in");
   }
 
   return (

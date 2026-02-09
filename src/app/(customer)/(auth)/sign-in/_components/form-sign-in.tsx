@@ -34,7 +34,7 @@ export function SignInForm() {
 
   useEffect(() => {
     if (state.success) {
-      router.push("/dashboard");
+      router.push("/");
     }
   }, [state.success, router]);
 

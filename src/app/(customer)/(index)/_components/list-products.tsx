@@ -11,7 +11,7 @@ export default async function ListProducts({ title }: ListProductProps) {
   const products = await getProducts();
 
   return (
-    <div id="picked" className="flex flex-col gap-[30px]">
+    <div id="picked" className="w-full flex flex-col gap-[30px]">
       <div className="flex items-center justify-between">
         <h2 className="font-bold text-2xl leading-[34px]">{title}</h2>
         <Link
@@ -21,7 +21,7 @@ export default async function ListProducts({ title }: ListProductProps) {
           Explore All
         </Link>
       </div>
-      <div className="grid grid-cols-5 gap-[30px]">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-[30px]">
         {products?.map((item) => (
           <CardProduct
             key={`${item.name + item.id}`}
