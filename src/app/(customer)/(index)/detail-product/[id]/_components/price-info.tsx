@@ -1,13 +1,40 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { TCart, TProduct } from "@/type";
+import { rupiahFormat } from "@/lib/utils";
+import { useCart } from "@/hooks/use-cart";
+import { useRouter } from "next/navigation";
 
-export default function PriceInfo() {
+interface PriceInfoProps {
+  item: TProduct;
+  isLogin?: boolean;
+}
+
+export default function PriceInfo({ item, isLogin }: PriceInfoProps) {
+  const { addProduct } = useCart();
+
+  const router = useRouter();
+  const checkout = () => {
+    const newCart: TCart = {
+      ...item,
+      quantity: 1,
+    };
+
+    addProduct(newCart);
+
+    router.push("/carts");
+  };
+
   return (
     <div className="w-[302px] flex flex-col shrink-0 gap-5 h-fit">
       <div className="w-full bg-white border border-[#E5E5E5] flex flex-col gap-[30px] p-[30px] rounded-3xl">
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Brand New</p>
-          <p className="font-bold text-[32px] leading-[48px]">Rp 56.500.000</p>
+          <p className="font-bold text-[32px] leading-[48px]">
+            {rupiahFormat(item.price)}
+          </p>
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
@@ -72,12 +99,14 @@ export default function PriceInfo() {
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <Link
-            href="/cart"
-            className="p-[12px_24px] bg-[#0D5CD7] rounded-full text-center font-semibold text-white"
+          <button
+            disabled={!isLogin}
+            type="button"
+            onClick={checkout}
+            className="p-[12px_24px] bg-[#0D5CD7] rounded-full text-center font-semibold text-white cursor-pointer disabled:bg-[#E5E5E5] disabled:text-[#999999]"
           >
             Add to Cart
-          </Link>
+          </button>
           <Link
             href="/"
             className="p-[12px_24px] bg-white rounded-full text-center font-semibold border border-[#E5E5E5]"

@@ -1,25 +1,16 @@
 import type { NextConfig } from "next";
 
-const isDev = process.env.NODE_ENV === "development";
-
 const nextConfig: NextConfig = {
-  // Production optimization: Reduces container size
+  // Production: Reduced container size
   output: "standalone",
 
   // Performance & Security
   compress: true,
   poweredByHeader: false,
 
-  // Development Memory Optimization
-  onDemandEntries: {
-    // Period (in ms) where the server will keep pages in the buffer
-    maxInactiveAge: 10 * 1000, // 10 seconds
-    // Number of pages that should be kept simultaneously without being disposed
-    pagesBufferLength: 1,
-  },
-
+  // Stable optimizations (works in Next.js 15.5.x)
   experimental: {
-    // Optimizes barrel file imports to reduce memory usage
+    // Optimize imports: Smaller bundles = less memory
     optimizePackageImports: [
       "lucide-react",
       "@tabler/icons-react",
@@ -43,19 +34,10 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    // Enable modern image formats
     formats: ["image/webp", "image/avif"],
-
-    // Increase cache TTL for better performance
-    minimumCacheTTL: 60 * 60 * 24 * 7, // 1 week
-
-    // Configure quality settings
+    minimumCacheTTL: 60 * 60 * 24 * 7,
     qualities: [25, 50, 75, 100],
-
-    // Speed up dev by skipping image optimization
-    unoptimized: isDev,
-
-    // No remote patterns needed for local image storage
+    unoptimized: process.env.NODE_ENV === "development",
   },
 };
 

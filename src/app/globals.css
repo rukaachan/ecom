@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "flickity/css/flickity.css";
 
 @custom-variant dark (&:is(.dark *));
 

@@ -4,7 +4,15 @@ import { lucia } from "@/lib/auth-edge";
 
 export async function middleware(request: NextRequest) {
   // Paths that don't require authentication
-  const publicPaths = ["/", "/sign-in", "/sign-up", "/api", "/catalogs", "/dashboard/sign-in"];
+  const publicPaths = [
+    "/",
+    "/sign-in",
+    "/sign-up",
+    "/api",
+    "/catalogs",
+    "/detail-product",
+    "/dashboard/sign-in",
+  ];
 
   const { pathname } = request.nextUrl;
 
@@ -24,7 +32,7 @@ export async function middleware(request: NextRequest) {
   if (!sessionId) {
     // No session and trying to access protected route
     if (!isPublicPath) {
-      return NextResponse.redirect(new URL("/sign-in", request.url));
+      return NextResponse.redirect(new URL("/", request.url));
     }
     return NextResponse.next();
   }
