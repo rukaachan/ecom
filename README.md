@@ -1,83 +1,101 @@
-# E-Commerce Admin Dashboard
+# Ecom
 
-A modern e-commerce admin dashboard built with Next.js 15, TypeScript, and Prisma.
+Next.js 15 e-commerce app (storefront + admin dashboard) built with TypeScript, Prisma, and PostgreSQL.
 
 ## Features
 
-- **Product Management**: Create, read, update, and delete products with image upload
-- **Category Management**: Organize products into categories
-- **Brand Management**: Manage product brands
-- **Location Management**: Track inventory across multiple locations
-- **Order Management**: View and manage customer orders
-- **Customer Management**: Manage customer information
-- **Dashboard Analytics**: Overview of key metrics and statistics
-- **Responsive Design**: Works on desktop and mobile devices
-- **Authentication**: Secure login and session management
+- Storefront: product listing, product detail, cart, checkout (Xendit Payment Request)
+- Admin: products, categories, brands, locations, orders, customers
+- Auth: Lucia sessions (superadmin + customer)
+- Image uploads: local storage under `public/uploads/*` (gitignored)
 
 ## Tech Stack
 
-- [Next.js 15](https://nextjs.org/) - React framework with App Router
-- [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
-- [Prisma](https://www.prisma.io/) - Database ORM
-- [PostgreSQL](https://www.postgresql.org/) - Database
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [Shadcn UI](https://ui.shadcn.com/) - Reusable component library
-- [Lucide React](https://lucide.dev/) - Icon library
-- Local storage (public/uploads) - Image storage\n- [Lucia Auth](https://lucia-auth.com/) - Authentication
-- [Zod](https://zod.dev/) - Validation library
-- [Biome](https://biomejs.dev/) - Linter and formatter
+- Next.js 15 (App Router) + React 19
+- TypeScript
+- Prisma + PostgreSQL
+- Lucia Auth
+- Tailwind CSS + Radix UI (shadcn/ui)
+- Zod validation
+- Xendit (`xendit-node`)
+- oxlint / oxfmt (lint/format)
 
-## Getting Started
+## Setup
 
-First, install the dependencies:
+### 1) Install dependencies
 
 ```bash
 pnpm install
 ```
 
-Set up the database:
+### 2) Configure environment variables
+
+Create `.env` from `.env.example`.
+
+Required:
+- `DATABASE_URL`
+- `XENDIT_SECRET_KEY`
+- `NEXT_PUBLIC_REDIRECT_URL`
+
+Recommended:
+- `XENDIT_WEBHOOK_CALLBACK_TOKEN` (validate webhook requests)
+
+Optional:
+- `NEXT_PUBLIC_FAILURE_RETURN_URL`
+
+### 3) Prepare database
 
 ```bash
-pnpm prisma generate
 pnpm prisma migrate dev
 ```
 
-Create a `.env` file based on `.env.example` and fill in your environment variables.
+Optional seed:
 
-Run the development server:
+```bash
+pnpm prisma:seed
+```
+
+### 4) Run the app
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-## Available Scripts
+## Xendit Webhook
 
-- `pnpm dev` - Runs the development server
-- `pnpm build` - Builds the application for production
-- `pnpm start` - Runs the built application
-- `pnpm lint` - Checks for linting errors
-- `pnpm lint:fix` - Fixes linting errors automatically
-- `pnpm format` - Formats code according to Biome configuration
-- `pnpm type-check` - Runs TypeScript type checking
+The app exposes:
+- `POST /api/order/status`
+
+This endpoint:
+- Accepts `reference_id` / `referenceId` (also supports nested `data.reference_id` / `data.referenceId`)
+- Updates the `order.status` by matching `order.code`
+- If `XENDIT_WEBHOOK_CALLBACK_TOKEN` is set, it requires header `x-callback-token` to match
+- Ignores unsupported events (expects `payment.succeeded`)
+
+Configure your Xendit dashboard webhook URL to:
+- `https://<your-domain>/api/order/status`
+
+## Scripts
+
+- `pnpm dev`: start dev server
+- `pnpm build`: build for production
+- `pnpm start`: run production server
+- `pnpm lint`: oxlint
+- `pnpm lint:fix`: oxlint autofix
+- `pnpm format`: oxfmt write
+- `pnpm type-check`: `tsc --noEmit`
 
 ## Project Structure
 
 ```
 src/
-├── app/              # Next.js app directory
-│   ├── (admin)/      # Admin dashboard pages
-│   └── api/          # API routes
-├── components/       # Shared React components
-├── lib/              # Utility functions and libraries
-└── type/             # TypeScript types
+  app/                 Next.js routes (App Router)
+    (admin)/           Admin dashboard
+    (customer)/        Storefront
+    api/               Route handlers
+  components/           Shared UI
+  lib/                  Utilities (auth, prisma, uploads, xendit)
+  type/                 Shared TS types
 ```
-
-## Learn More
-
-To learn more about the technologies used in this project:
-
-- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features
-- [Prisma Documentation](https://www.prisma.io/docs/) - Database toolkit documentation
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Utility-first CSS framework
