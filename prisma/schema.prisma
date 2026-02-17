@@ -175,6 +175,9 @@ model OrderProduct {
   order_id Int
   order    Order @relation(fields: [order_id], references: [id], onDelete: Cascade)
 
+  subTotal BigInt @db.BigInt
+  quantity Int
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

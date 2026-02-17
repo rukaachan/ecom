@@ -8,7 +8,7 @@ interface CardProductProps {
   href?: string;
 }
 
-export default function CardProduct({ item, href = "/details" }: CardProductProps) {
+export default function CardProduct({ item, href: _href = "/details" }: CardProductProps) {
   return (
     <Link
       key={`${item.name + item.id}`}

@@ -18,13 +18,13 @@ export async function postLocation(_: unknown, formData: FormData): Promise<Acti
   }
 
   try {
-    await prisma?.location.create({
+    await prisma.location.create({
       data: {
         name: validate.data.name,
       },
     });
     revalidatePath("/dashboard/locations");
-  } catch (_error) {
+  } catch {
     return {
       error: "Failed to create location",
     };
@@ -55,7 +55,7 @@ export async function updateLocation(
   }
 
   try {
-    await prisma?.location.update({
+    await prisma.location.update({
       where: {
         id: id,
       },
@@ -64,7 +64,7 @@ export async function updateLocation(
       },
     });
     revalidatePath("/dashboard/locations");
-  } catch (_error) {
+  } catch {
     return {
       error: "Failed to update location",
     };
@@ -94,13 +94,13 @@ export async function deleteLocation(
   }
 
   try {
-    await prisma?.location.delete({
+    await prisma.location.delete({
       where: {
         id: locationId,
       },
     });
     revalidatePath("/dashboard/locations");
-  } catch (_error) {
+  } catch {
     return {
       error: "Failed to delete location. It might be associated with products.",
     };

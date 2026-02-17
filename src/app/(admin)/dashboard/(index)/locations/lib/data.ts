@@ -4,9 +4,9 @@ import prisma from "../../../../../../../lib/prisma";
 
 export async function getLocations() {
   try {
-    const locations = (await prisma?.location.findMany({})) || [];
+    const locations = await prisma.location.findMany({});
     return locations;
-  } catch (_error) {
+  } catch {
     return [];
   }
 }
@@ -20,7 +20,7 @@ export async function getLocationById(id: string) {
     });
 
     return location;
-  } catch (_error) {
+  } catch {
     return null;
   }
 }

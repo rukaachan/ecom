@@ -4,9 +4,9 @@ import prisma from "../../../../../../../lib/prisma";
 
 export async function getCategories() {
   try {
-    const categories = (await prisma?.category.findMany({})) || [];
+    const categories = await prisma.category.findMany({});
     return categories;
-  } catch (_error) {
+  } catch {
     return [];
   }
 }
@@ -20,7 +20,7 @@ export async function getCategoryById(id: string) {
     });
 
     return category;
-  } catch (_error) {
+  } catch {
     return null;
   }
 }

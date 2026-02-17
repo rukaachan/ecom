@@ -64,7 +64,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const products = await prisma?.product.findMany({
+    const products = await prisma.product.findMany({
       where: {
         OR: QRQuery.length > 0 ? QRQuery : undefined,
       },
@@ -92,8 +92,7 @@ export async function POST(request: Request) {
     }));
 
     return Response.json(res);
-  } catch (error) {
-    console.log(error);
+  } catch {
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

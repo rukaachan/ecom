@@ -7,8 +7,9 @@ import { schemaSignIn, schemaSignUp } from "@/lib/schema";
 import type { ActionResult } from "@/type";
 import prisma from "../../../../../lib/prisma";
 
+type CookieOptions = Parameters<(Awaited<ReturnType<typeof cookies>>)["set"]>[2];
+
 export async function signin(_: unknown, formData: FormData): Promise<ActionResult> {
-  // Check if we're in the right environment
   const isServer = typeof window === "undefined";
   const isEdge = typeof process === "undefined" || process.env?.NEXT_RUNTIME === "edge";
 
@@ -40,10 +41,6 @@ export async function signin(_: unknown, formData: FormData): Promise<ActionResu
       },
     });
 
-    // Debug logging
-    console.log("Sign-in attempt for email:", validate.data.email);
-    console.log("Existing user found:", existingUser);
-
     if (!existingUser) {
       return {
         error: "Email not found",
@@ -51,8 +48,6 @@ export async function signin(_: unknown, formData: FormData): Promise<ActionResu
     }
 
     const comparedPassword = bcryptjs.compareSync(validate.data.password, existingUser.password);
-
-    console.log("Password comparison result:", comparedPassword);
 
     if (!comparedPassword) {
       return {
@@ -63,18 +58,17 @@ export async function signin(_: unknown, formData: FormData): Promise<ActionResu
     const session = await lucia.createSession(existingUser.id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
 
-    console.log("Created session:", session);
-    console.log("Session cookie:", sessionCookie);
+    (await cookies()).set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes as CookieOptions
+    );
 
-    (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-
-    // Return success without redirecting directly
     return {
       error: "",
       success: true,
     };
-  } catch (_error) {
-    console.error("Sign-in error:", _error);
+  } catch {
     return {
       error: "An unexpected error occurred during sign-in",
     };
@@ -110,8 +104,7 @@ export async function signup(_: unknown, formData: FormData): Promise<ActionResu
       error: "",
       success: true,
     };
-  } catch (_error) {
-    console.log(_error);
+  } catch {
     return {
       error: "An unexpected error occurred during sign-up",
     };

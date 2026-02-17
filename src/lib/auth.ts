@@ -1,33 +1,43 @@
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
-import type { Role } from "@prisma/client";
 import { Lucia, type Session, type User } from "lucia";
 import { cookies } from "next/headers";
 import { cache } from "react";
 
-// Define our custom user attributes
-type DatabaseUserAttributes = {
+type CookieOptions = Parameters<(Awaited<ReturnType<typeof cookies>>)["set"]>[2];
+
+export type AppUser = User & {
   id: number;
   name: string;
   email: string;
-  role: Role;
+  role: string;
 };
 
-// Create a type-safe Lucia instance
-interface Register {
-  Lucia: typeof lucia;
-  UserId: number;
-  DatabaseUserAttributes: DatabaseUserAttributes;
-}
+type ValidateSessionResult = {
+  user: AppUser | null;
+  session: Session | null;
+};
 
-// Always try to initialize the real Lucia instance
-let lucia: any;
+type SessionCookie = {
+  name: string;
+  value: string;
+  attributes: unknown;
+};
+
+type LuciaLike = {
+  sessionCookieName: string;
+  validateSession: (sessionId: string) => Promise<ValidateSessionResult>;
+  createSession: (userId: number, attributes: Record<string, unknown>) => Promise<Session>;
+  createSessionCookie: (sessionId: string) => SessionCookie;
+  createBlankSessionCookie: () => SessionCookie;
+  invalidateSession: (sessionId: string) => Promise<void>;
+};
+
+let lucia: LuciaLike;
 
 try {
-  // Check if we're in an environment where we can use Prisma
   const isEdge = typeof process === "undefined" || process.env?.NEXT_RUNTIME === "edge";
 
   if (!isEdge) {
-    // Dynamically import prisma only in server environment
     const { default: prisma } = await import("../../lib/prisma");
 
     const adapter = new PrismaAdapter(prisma.session, prisma.user);
@@ -47,12 +57,11 @@ try {
           role: attributes.role,
         };
       },
-    });
+    }) as unknown as LuciaLike;
   } else {
     throw new Error("Edge environment - using mock");
   }
 } catch (error) {
-  // Fallback mock for edge environments or errors
   lucia = {
     sessionCookieName: "auth_session",
     validateSession: async () => {
@@ -62,9 +71,9 @@ try {
       };
     },
     createSession: async () => {
-      throw new Error("createSession not available in this environment");
+      throw new Error("createSession not available in this environment", { cause: error });
     },
-    createSessionCookie: () => {
+    createSessionCookie: (_sessionId: string) => {
       return {
         name: "auth_session",
         value: "",
@@ -79,7 +88,6 @@ try {
       };
     },
     invalidateSession: async () => {
-      // Mock implementation - do nothing
     },
   };
 }
@@ -87,11 +95,9 @@ try {
 export { lucia };
 
 export const getUser = cache(
-  async (): Promise<{ user: User; session: Session } | { user: null; session: null }> => {
-    // Check if we're in an edge environment
+  async (): Promise<{ user: AppUser; session: Session } | { user: null; session: null }> => {
     const isEdge = typeof process === "undefined" || process.env?.NEXT_RUNTIME === "edge";
 
-    // Return null user/session if we're in edge environment
     if (isEdge) {
       return {
         user: null,
@@ -112,27 +118,32 @@ export const getUser = cache(
 
       const result = await lucia.validateSession(sessionId);
 
-      // next.js throws when you attempt to set cookie when rendering page
       try {
         if (result.session?.fresh) {
           const sessionCookie = lucia.createSessionCookie(result.session.id);
-          (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+          (await cookies()).set(
+            sessionCookie.name,
+            sessionCookie.value,
+            sessionCookie.attributes as CookieOptions
+          );
         }
         if (!result.session) {
           const sessionCookie = lucia.createBlankSessionCookie();
-          (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+          (await cookies()).set(
+            sessionCookie.name,
+            sessionCookie.value,
+            sessionCookie.attributes as CookieOptions
+          );
         }
-      } catch (error) {
-        // Silently fail cookie setting errors
+      } catch {
       }
 
-      // Ensure we return the correct type
       if (result.user && result.session) {
         return { user: result.user, session: result.session };
       } else {
         return { user: null, session: null };
       }
-    } catch (error) {
+    } catch {
       return {
         user: null,
         session: null,

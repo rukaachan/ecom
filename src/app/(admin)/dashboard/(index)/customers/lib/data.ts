@@ -28,7 +28,7 @@ export async function getCustomers() {
     });
 
     return response;
-  } catch (_error) {
+  } catch {
     // Return empty array in case of error to prevent breaking the UI
     return [];
   }

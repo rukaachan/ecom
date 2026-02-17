@@ -239,7 +239,7 @@ export async function deleteProduct(
     });
 
     revalidatePath("/dashboard/products");
-  } catch (_error) {
+  } catch {
     return {
       error: "Failed to delete product",
     };

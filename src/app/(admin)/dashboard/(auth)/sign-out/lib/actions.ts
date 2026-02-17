@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { lucia } from "@/lib/auth";
 
+type CookieOptions = Parameters<(Awaited<ReturnType<typeof cookies>>)["set"]>[2];
+
 export async function logout() {
   // Check if we're in the right environment
   const isServer = typeof window === "undefined";
@@ -26,12 +28,12 @@ export async function logout() {
       (await cookies()).set(
         blankSessionCookie.name,
         blankSessionCookie.value,
-        blankSessionCookie.attributes
+        blankSessionCookie.attributes as CookieOptions
       );
     }
 
     return redirect("/dashboard/sign-in");
-  } catch (_error) {
+  } catch {
     return {
       error: "An unexpected error occurred during logout",
     };

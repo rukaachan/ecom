@@ -10,10 +10,7 @@ interface CarouselImagesProps {
 
 export default function CarouselImages({ images }: CarouselImagesProps) {
   return (
-    <div
-      id="details-images"
-      className="main-carousel overflow-x-hidden mt-[30px]"
-    >
+    <div id="details-images" className="main-carousel overflow-x-hidden mt-[30px]">
       <Flickity
         options={{
           cellAlign: "left",

@@ -15,7 +15,7 @@ export async function getDashboardStats() {
       brandsCount,
       locationsCount,
     };
-  } catch (_error) {
+  } catch {
     return {
       productsCount: 0,
       categoriesCount: 0,

@@ -4,9 +4,9 @@ import prisma from "../../../../../../../lib/prisma";
 
 export async function getBrands() {
   try {
-    const brands = await prisma?.brand.findMany({});
+    const brands = await prisma.brand.findMany({});
     return brands;
-  } catch (_error) {
+  } catch {
     return [];
   }
 }
@@ -20,7 +20,7 @@ export async function getBrandById(id: string) {
     });
 
     return brand;
-  } catch (_error) {
+  } catch {
     return null;
   }
 }

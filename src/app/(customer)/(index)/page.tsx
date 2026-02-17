@@ -11,7 +11,7 @@ export default function LandingPage() {
     <div>
       <header className="bg-[#EFF3FA] pt-[30px] pb-[50px]">
         <Navbar />
-        <div className="container max-w-[1130px] mx-auto flex items-center justify-between gap-1 mt-[50px]">
+        <div className="w-full max-w-[1030px] mx-auto px-5 flex items-center justify-between gap-1 mt-[50px]">
           <div className="flex flex-col gap-[30px]">
             <div className="flex items-center gap-[10px] p-[8px_16px] rounded-full bg-white w-fit">
               <div className="w-[22px] h-[22px] flex shrink-0">
@@ -34,7 +34,7 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center gap-3">
               <Link
-                href="/cart"
+                href="/carts"
                 className="p-[18px_24px] rounded-full font-semibold bg-[#0D5CD7] text-white"
               >
                 Add to Cart
@@ -83,7 +83,10 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="container max-w-[1130px] mx-auto flex items-center justify-center gap-10 mt-[50px]">
+        <div
+          id="testimonials"
+          className="w-full max-w-[1030px] mx-auto px-5 flex items-center justify-center gap-10 mt-[50px]"
+        >
           <div className="flex items-center gap-[10px]">
             <div className="w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden">
               <Image
@@ -148,7 +151,7 @@ export default function LandingPage() {
       </header>
       <section
         id="content"
-        className="container max-w-[1130px] mx-auto flex flex-col gap-[50px] pt-[50px] pb-[100px]"
+        className="w-full max-w-[1030px] mx-auto px-5 flex flex-col gap-[50px] pt-[50px] pb-[100px]"
       >
         <Suspense fallback={<span>Loading..</span>}>
           <ListCategory />
@@ -164,9 +167,11 @@ export default function LandingPage() {
           />
         </Suspense>
 
-        <Suspense fallback={<span>Loading..</span>}>
-          <ListBrands />
-        </Suspense>
+        <div id="rewards">
+          <Suspense fallback={<span>Loading..</span>}>
+            <ListBrands />
+          </Suspense>
+        </div>
 
         <Suspense fallback={<span>Loading..</span>}>
           <ListProduts

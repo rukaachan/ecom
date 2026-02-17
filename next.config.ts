@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // Production: Reduced container size
-  output: "standalone",
+  output: process.platform === "win32" ? undefined : "standalone",
 
   // Performance & Security
   compress: true,

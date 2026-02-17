@@ -15,10 +15,14 @@ export async function POST() {
     const response = NextResponse.redirect(
       new URL("/sign-in", process.env.NEXTAUTH_URL || "http://localhost:3000")
     );
-    response.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    response.cookies.set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes as Parameters<typeof response.cookies.set>[2]
+    );
 
     return response;
-  } catch (_error) {
+  } catch {
     return NextResponse.json({ error: "Failed to logout" }, { status: 500 });
   }
 }

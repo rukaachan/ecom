@@ -1,6 +1,6 @@
 "use client";
 
-import type { Brand, Category, Location } from "@prisma/client";
+import type { Brand, Category, Location, Prisma } from "@prisma/client";
 import { AlertCircleIcon, SquareChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useActionState, useEffect, useState } from "react";
@@ -30,9 +30,27 @@ const initialState: ActionResult = {
   error: "",
 };
 
+type ProductForForm = Prisma.ProductGetPayload<{
+  select: {
+    id: true;
+    name: true;
+    description: true;
+    price: true;
+    stock: true;
+    brand_id: true;
+    category_id: true;
+    location_id: true;
+    images: true;
+    createdAt: true;
+    category: { select: { name: true } };
+    brand: { select: { name: true } };
+    location: { select: { name: true } };
+  };
+}>;
+
 interface FormProductsProps {
   type?: "ADD" | "EDIT";
-  data?: any | null;
+  data?: ProductForForm | null;
 }
 
 function SubmitButton() {
@@ -80,7 +98,7 @@ export default function FormProducts({ data, type }: FormProductsProps) {
         setCategories(categoriesData);
         setBrands(brandsData);
         setLocations(locationsData);
-      } catch (_error) {
+      } catch {
       } finally {
         setLoading(false);
       }
@@ -90,7 +108,10 @@ export default function FormProducts({ data, type }: FormProductsProps) {
   }, []);
 
   const updateProductWithId = (_: unknown, formData: FormData) => {
-    return updateProduct(_, formData, data?.id);
+    if (!data?.id) {
+      return Promise.resolve({ error: "Product not found" });
+    }
+    return updateProduct(_, formData, data.id);
   };
 
   const [state, formAction] = useActionState(
@@ -297,7 +318,7 @@ export default function FormProducts({ data, type }: FormProductsProps) {
               <UploadImages
                 name="images"
                 existingImages={
-                  data?.images?.map((image: string) => getImageUrl(image, "product")) || []
+                  data?.images?.map((image) => getImageUrl(image, "product")) || []
                 }
                 required={type === "ADD"}
               />

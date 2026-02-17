@@ -14,7 +14,7 @@ export default function CatalogsPage() {
       <SearchBar />
       <div
         id="catalog"
-        className="container max-w-[1130px] mx-auto flex gap-[30px] mt-[50px] pb-[100px]"
+        className="w-full max-w-[1030px] mx-auto px-5 flex gap-[30px] mt-[50px] pb-[100px]"
       >
         <form
           action=""

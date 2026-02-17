@@ -18,13 +18,13 @@ export async function postCategory(_: unknown, formData: FormData): Promise<Acti
   }
 
   try {
-    await prisma?.category.create({
+    await prisma.category.create({
       data: {
         name: validate.data.name,
       },
     });
     revalidatePath("/dashboard/categories");
-  } catch (_error) {
+  } catch {
     return {
       error: "Failed to create category",
     };
@@ -55,7 +55,7 @@ export async function updateCategory(
   }
 
   try {
-    await prisma?.category.update({
+    await prisma.category.update({
       where: {
         id: id,
       },
@@ -64,7 +64,7 @@ export async function updateCategory(
       },
     });
     revalidatePath("/dashboard/categories");
-  } catch (_error) {
+  } catch {
     return {
       error: "Failed to update category",
     };
@@ -94,13 +94,13 @@ export async function deleteCategory(
   }
 
   try {
-    await prisma?.category.delete({
+    await prisma.category.delete({
       where: {
         id: categoryId,
       },
     });
     revalidatePath("/dashboard/categories");
-  } catch (_error) {
+  } catch {
     return {
       error: "Failed to delete category. It might be associated with products.",
     };

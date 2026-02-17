@@ -37,3 +37,22 @@ export const schemaBrands = schemaCategory.extend({
       message: "File is not valid. Only JPG, JPEG, and PNG files are allowed",
     }),
 });
+
+export const schemaShippingAddress = z.object({
+  name: z
+    .string({ required_error: "Name is required" })
+    .min(5, { message: "Name must be at least 5 characters long" }),
+  address: z
+    .string({ required_error: "Address is required" })
+    .min(5, { message: "Address must be at least 5 characters long" }),
+  city: z
+    .string({ required_error: "City is required" })
+    .min(2, { message: "City must be at least 2 characters long" }),
+  postal_code: z
+    .string({ required_error: "Postal Code is required" })
+    .min(5, { message: "Postal Code must be at least 5 characters long" }),
+  notes: z.string().nullable(),
+  phone: z
+    .string({ required_error: "Phone Number is required" })
+    .min(10, { message: "Phone Number must be at least 10 characters long" }),
+});

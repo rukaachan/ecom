@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { getUser } from "@/lib/auth";
-import type { UserRole } from "@/type";
 
 export default async function AuthLayout({
   children,
@@ -8,7 +7,7 @@ export default async function AuthLayout({
   children: React.ReactNode;
 }>) {
   // Server-side authentication verification for Next.js Server Components
-  const { session, user } = (await getUser()) as { session: any; user: UserRole | null };
+  const { session, user } = await getUser();
 
   // If user is authenticated and is a superadmin, redirect them away from auth pages
   if (session && user && user.role === "superadmin") {

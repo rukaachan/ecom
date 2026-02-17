@@ -15,9 +15,6 @@ export default function FilterPrice() {
         minPrice: minPrice || undefined,
         maxPrice: maxPrice || undefined,
       });
-
-      console.log(minPrice);
-      console.log(maxPrice);
     }, 500);
 
     return () => clearTimeout(debounceInput);

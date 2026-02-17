@@ -4,7 +4,7 @@ import type { TColumn } from "../columns";
 
 export async function getOrders() {
   try {
-    const orders = await prisma?.order.findMany({
+    const orders = await prisma.order.findMany({
       include: {
         user: true,
         orderProducts: {
@@ -39,8 +39,7 @@ export async function getOrders() {
     });
 
     return response;
-  } catch (_error) {
-    console.error("Error fetching orders:", _error);
+  } catch {
     return [];
   }
 }

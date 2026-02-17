@@ -14,7 +14,6 @@ export default function SearchBar() {
       setFilter({
         search: query,
       });
-      console.log("Applied search filter:", query);
     }, 1500);
 
     return () => clearTimeout(debounceInput);
@@ -23,15 +22,15 @@ export default function SearchBar() {
   return (
     <div
       id="title"
-      className="container max-w-[1130px] mx-auto flex items-center justify-between my-5"
+      className="w-full max-w-[1030px] mx-auto px-5 flex items-center justify-between my-5"
     >
       <div className="flex flex-col gap-5">
         <div className="flex gap-5 items-center">
-          <Link href="/shop" className="page text-sm text-[#6A7789] last-of-type:text-black">
+          <Link href="/" className="page text-sm text-[#6A7789] last-of-type:text-black">
             Shop
           </Link>
           <span className="text-sm text-[#6A7789]">/</span>
-          <Link href="/browse" className="page text-sm text-[#6A7789] last-of-type:text-black">
+          <Link href="/catalogs" className="page text-sm text-[#6A7789] last-of-type:text-black">
             Browse
           </Link>
           <span className="text-sm text-[#6A7789]">/</span>

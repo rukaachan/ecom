@@ -9,25 +9,13 @@ export default async function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Server-side authentication verification for Next.js Server Components
-  const { user, session } = (await getUser()) as {
-    session: any;
-    user: UserRole | null;
-  };
-
-  // Debug logging
-  console.log("Dashboard auth check:", { user, session });
+  const { user, session } = (await getUser()) as { user: UserRole | null; session: unknown };
 
   if (!session) {
-    console.log("No session found, redirecting to sign-in");
     return redirect("/dashboard/sign-in");
   }
 
   if (user && user.role !== "superadmin") {
-    console.log(
-      "User role not authorized for dashboard, redirecting to sign-in. User role:",
-      user?.role
-    );
     return redirect("/dashboard/sign-in");
   }
 

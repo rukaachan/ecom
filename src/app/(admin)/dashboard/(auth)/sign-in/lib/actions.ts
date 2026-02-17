@@ -7,6 +7,8 @@ import { schemaSignIn } from "@/lib/schema";
 import type { ActionResult } from "@/type";
 import prisma from "../../../../../../../lib/prisma";
 
+type CookieOptions = Parameters<(Awaited<ReturnType<typeof cookies>>)["set"]>[2];
+
 async function SignIn(_: unknown, formData: FormData): Promise<ActionResult> {
   // Check if we're in the right environment
   const isServer = typeof window === "undefined";
@@ -57,14 +59,18 @@ async function SignIn(_: unknown, formData: FormData): Promise<ActionResult> {
     const session = await lucia.createSession(existingUser.id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
 
-    (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    (await cookies()).set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes as CookieOptions
+    );
 
     // Return success without redirecting directly
     return {
       error: "",
       success: true,
     };
-  } catch (_error) {
+  } catch {
     return {
       error: "An unexpected error occurred during sign-in",
     };

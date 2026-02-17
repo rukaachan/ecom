@@ -39,7 +39,7 @@ export async function postBrand(_: unknown, formData: FormData): Promise<ActionR
       },
     });
     revalidatePath("/dashboard/brands");
-  } catch (_error) {
+  } catch {
     return {
       error: "Failed to create brand",
     };
@@ -57,7 +57,7 @@ export async function getBrandById(id: string) {
     });
 
     return brand;
-  } catch (_error) {
+  } catch {
     return null;
   }
 }
@@ -103,30 +103,30 @@ export async function updateBrandWithId(
       data: dataToUpdate,
     });
     revalidatePath("/dashboard/brands");
-  } catch (_error) {
-    if (_error && typeof _error === "object" && "code" in _error && _error.code === "P2025") {
+  } catch (error) {
+    if (error && typeof error === "object" && "code" in error && error.code === "P2025") {
       return {
         error: "Brand not found or could not be updated",
       };
     }
     // Handle upload errors specifically
-    if (_error instanceof Error && _error.message.includes("Upload failed")) {
+    if (error instanceof Error && error.message.includes("Upload failed")) {
       return {
-        error: _error.message,
+        error: error.message,
       };
     }
     // Handle network connectivity issues
     if (
-      _error instanceof Error &&
-      (_error.message.includes("fetch failed") || _error.message.includes("ENETUNREACH"))
+      error instanceof Error &&
+      (error.message.includes("fetch failed") || error.message.includes("ENETUNREACH"))
     ) {
       return {
         error:
-          "Network connectivity issue: Unable to reach Supabase storage service. Please check your internet connection and try again.",
+          "Network connectivity issue: Unable to access storage. Please check your internet connection and try again.",
       };
     }
     return {
-      error: `Failed to update brand: ${_error instanceof Error ? _error.message : "Unknown error"}`,
+      error: `Failed to update brand: ${error instanceof Error ? error.message : "Unknown error"}`,
     };
   }
 
@@ -159,7 +159,7 @@ export async function deleteBrand(_state: ActionResult, formData: FormData): Pro
       },
     });
     revalidatePath("/dashboard/brands");
-  } catch (_error) {
+  } catch {
     return {
       error: "Failed to delete data",
     };

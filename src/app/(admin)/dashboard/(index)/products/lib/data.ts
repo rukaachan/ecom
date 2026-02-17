@@ -3,7 +3,7 @@ import type { TColumn } from "../columns";
 
 export async function getProducts() {
   try {
-    const products = await prisma?.product.findMany({
+    const products = await prisma.product.findMany({
       orderBy: {
         name: "asc",
       },
@@ -56,7 +56,7 @@ export async function getProducts() {
     });
 
     return response_products;
-  } catch (_error) {
+  } catch {
     return [];
   }
 }
@@ -97,7 +97,7 @@ export async function getProductById(id: string) {
     });
 
     return product;
-  } catch (_error) {
+  } catch {
     return null;
   }
 }

@@ -37,8 +37,7 @@ export async function getProductById(id: number) {
         return getImageUrl(img, "product");
       }),
     };
-  } catch (error) {
-    console.error(error);
+  } catch {
     return null;
   }
 }

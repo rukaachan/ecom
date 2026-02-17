@@ -2,9 +2,7 @@
 
 import {
   Archive,
-  AudioWaveform,
   Building,
-  Command,
   GalleryVerticalEnd,
   Home,
   MapPin,

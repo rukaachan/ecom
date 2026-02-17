@@ -23,8 +23,7 @@ A modern e-commerce admin dashboard built with Next.js 15, TypeScript, and Prism
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Shadcn UI](https://ui.shadcn.com/) - Reusable component library
 - [Lucide React](https://lucide.dev/) - Icon library
-- [Supabase](https://supabase.com/) - Image storage
-- [Lucia Auth](https://lucia-auth.com/) - Authentication
+- Local storage (public/uploads) - Image storage\n- [Lucia Auth](https://lucia-auth.com/) - Authentication
 - [Zod](https://zod.dev/) - Validation library
 - [Biome](https://biomejs.dev/) - Linter and formatter
 

@@ -16,10 +16,7 @@ export const useCart = create<CartState>()(
       products: [],
       addProduct: (cart) =>
         set({
-          products: [
-            ...get().products.filter((item) => item.id !== cart.id),
-            cart,
-          ],
+          products: [...get().products.filter((item) => item.id !== cart.id), cart],
         }),
       increaseQuantity: (id) => {
         const newProducts = get().products.map((item) => {
@@ -58,6 +55,6 @@ export const useCart = create<CartState>()(
     {
       name: "cart-storage",
       storage: createJSONStorage(() => sessionStorage),
-    },
-  ),
+    }
+  )
 );
